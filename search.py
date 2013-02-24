@@ -25,6 +25,7 @@ class Search(object):
             },
         }
         self.conn.indices.put_mapping("wiki", {'properties': mapping}, ["trac"])
+        self.conn.indices.put_mapping("ticket", {'properties': mapping}, ["trac"])
 
     def recreate(self):
         self.delete()
