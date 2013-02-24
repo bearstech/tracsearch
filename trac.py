@@ -28,5 +28,19 @@ class Trac(object):
         today = datetime.datetime.today()
         for t in self.trac.ticket.getRecentChanges(today - since):
             id_, created, changed, attributes = self.trac.ticket.get(t)
-            yield attributes
+            attributes['id'] = id_
+            #attributes['created'] = created
+            #attributes['changed'] = changed
+            attributes['cc'] = attributes['cc'].split(', ')
+            for k in ['time', 'changetime']:
+                attributes[k] = attributes[k].value
+            attributes['id'] = str(attributes['id'])
+            comments = []
+            try:
+                for time, author, field, oldvalue, newvalue, permanent in self.trac.ticket.changeLog(t):
+                    if field == 'comment':
+                        comments.append({'author': author, 'time': time.value, 'comment': newvalue})
+            except: #  xml trouble
+                pass
+            yield attributes, comments
 
