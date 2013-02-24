@@ -1,9 +1,10 @@
 from pyes import ES
+import json
 
 
 class Search(object):
     def __init__(self):
-        self.conn = ES('127.0.0.1:9200')
+        self.conn = ES('127.0.0.1:9200', encoder=json.JSONEncoder)
         self.index = self.conn.index
 
     def delete(self):
