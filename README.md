@@ -21,6 +21,14 @@ Try the scripts
 
 Install [head](http://mobz.github.com/elasticsearch-head/) in your elastic and watch your datas.
 
+Todo
+----
+
+ * √ Index wiki, tiket and comment
+ * _ Web UI
+ * _ Multiple Trac
+ * _ Trac module to live index
+ * _ Redmine variant
 
 Licence
 -------
