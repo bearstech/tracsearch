@@ -19,7 +19,7 @@ Try the scripts
     ./index_wiki.py
     ./index_ticket.py
 
-Install _head_ in your elastic and watch your datas.
+Install [head](http://mobz.github.com/elasticsearch-head/) in your elastic and watch your datas.
 
 
 Licence
