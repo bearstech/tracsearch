@@ -1,0 +1,21 @@
+<!doctype html>
+<title>Trac Search</title>
+
+<body>
+    {% if results %}
+ {{ results.hits.total }}
+ <ul>
+     {% for result in results.hits.hits %}
+     <li>
+         {% for field in result['highlight'] %}
+            {% for value in result['highlight'][field] %}
+                {{value | safe}}
+            {% endfor%}
+         {% endfor %}
+     </li>
+
+ {% endfor %}
+ </ul>
+
+ {% endif %}
+    </body>
