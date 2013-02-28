@@ -19,12 +19,15 @@ def hello():
                     'query': q
                 }
             },
+            'sort': [
+                {'changetime': 'desc'}
+            ],
             'highlight': {
                 "pre_tags" : ["<b>"],
                 "post_tags" : ["</b>"],
                 'fields': {
                     '_all': {},
-                    'comment': {},
+                    'comment.comment': {},
                     'description': {},
                     'summary': {}
                 }
