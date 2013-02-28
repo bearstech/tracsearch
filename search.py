@@ -25,7 +25,25 @@ class Search(object):
             },
         }
         self.conn.indices.put_mapping("wiki", {'properties': mapping}, ["trac"])
-        self.conn.indices.put_mapping("ticket", {'properties': mapping}, ["trac"])
+        mapping = {
+                '_all': {
+                    'enabled': True
+                    },
+                'properties': {
+                    'description': {
+                        'type': 'string',
+                        'store': 'yes',
+                        "term_vector": "with_positions_offsets"
+                        },
+                    'summary': {
+                        'boost': 2.0,
+                        'type': 'string',
+                        'store': 'yes',
+                        "term_vector": "with_positions_offsets"
+                        }
+                    }
+                }
+        self.conn.indices.put_mapping("ticket", mapping, ["trac"])
         mapping = {
             '_parent': {'type': 'ticket'},
             'properties': {}
