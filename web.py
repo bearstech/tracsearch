@@ -25,7 +25,8 @@ def hello():
                 'fields': {
                     '_all': {},
                     'comment': {},
-                    'description': {}
+                    'description': {},
+                    'summary': {}
                 }
             }
         }

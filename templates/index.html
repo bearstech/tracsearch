@@ -10,11 +10,13 @@
  <ul>
      {% for result in results.hits.hits %}
      <li>
+         <span class="type">{{result['_type']}}</span> <br/>
          {% for field in result['highlight'] %}
+         <i>{{field}}</i>
             {% for value in result['highlight'][field] %}
                 {{value | safe}}
             {% endfor%}
-         {% endfor %}
+            {% endfor %}
      </li>
 
  {% endfor %}
