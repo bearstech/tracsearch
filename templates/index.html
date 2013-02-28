@@ -2,6 +2,9 @@
 <title>Trac Search</title>
 
 <body>
+    <form action="/" method="GET">
+        <input type="text" name="q" value="{{q}}"/>
+    </form>
     {% if results %}
  {{ results.hits.total }}
  <ul>
