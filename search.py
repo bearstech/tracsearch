@@ -1,20 +1,15 @@
-from pyes import ES
-import json
+from pyelasticsearch import ElasticSearch
 
 
 class Search(object):
     def __init__(self):
-        self.conn = ES('127.0.0.1:9200', encoder=json.JSONEncoder)
-        self.index = self.conn.index
+        self.es = ElasticSearch('http://127.0.0.1:9200')
 
     def delete(self):
-        try:
-            self.conn.indices.delete_index("trac")
-        except:
-            pass
+        assert self.es.delete_index("trac")['ok']
 
     def create(self):
-        self.conn.indices.create_index("trac")
+        self.es.create_index("trac")
         mapping = {
             'name': {
                 'boost': 1.0,
@@ -24,36 +19,47 @@ class Search(object):
                 "term_vector": "with_positions_offsets"
             },
         }
-        self.conn.indices.put_mapping("wiki", {'properties': mapping}, ["trac"])
+        self.es.put_mapping('trac', "wiki", {'properties': mapping})
         mapping = {
-                '_all': {
-                    'enabled': True
-                    },
-                'properties': {
-                    'description': {
-                        'type': 'string',
-                        'store': 'yes',
-                        "term_vector": "with_positions_offsets"
+                'ticket': {
+                    '_all': {
+                        'enabled': True
                         },
-                    'summary': {
-                        'boost': 2.0,
-                        'type': 'string',
-                        'store': 'yes',
-                        "term_vector": "with_positions_offsets"
+                    'properties': {
+                        'description': {
+                            'type': 'string',
+                            'store': 'yes',
+                            "term_vector": "with_positions_offsets"
+                            },
+                        'summary': {
+                            'boost': 2.0,
+                            'type': 'string',
+                            'store': 'yes',
+                            "term_vector": "with_positions_offsets"
+                            }
+                        },
+                        'comment': {
+                            'type': 'nested',
+                            'include_in_parent': True
+                        },
+                        'changetime': {
+                            'type': 'datetime',
+                            'store': 'yes'
                         }
                     }
                 }
-        self.conn.indices.put_mapping("ticket", mapping, ["trac"])
+        self.es.put_mapping("trac", "ticket", mapping)
         mapping = {
-            '_parent': {'type': 'ticket'},
-            'properties': {}
-        }
-        self.conn.indices.put_mapping("comment", mapping, ["trac"])
+                'comment': {
+                    '_parent': {'type': 'ticket'},
+                    'properties': {}
+                    }
+                }
+        self.es.put_mapping("trac", "comment", mapping)
 
     def recreate(self):
         self.delete()
         self.create()
 
     def flush(self):
-        self.conn.flush_bulk()
-        self.conn.indices.refresh("trac")
+        self.es.refresh("trac")

@@ -9,10 +9,16 @@ trac = Trac()
 search = Search()
 search.recreate()
 
-week = datetime.timedelta(15)
-for ticket, comments in trac.ticket(week):
+period = datetime.timedelta(30)
+bulk_tickets = []
+for ticket, comments in trac.ticket(period):
     print ticket['summary']
-    search.index(ticket, 'trac', 'ticket', id=ticket['id'], bulk=True)
+    ticket['comment'] = []
+    n = 0
     for comment in comments:
-        search.index(comment, 'trac', 'comment', parent=ticket['id'], bulk=True)
+        comment['id'] = "%s_%i" % (ticket['id'], n)
+        ticket['comment'].append(comment)
+        n += 1
+    bulk_tickets.append(ticket)
+search.es.bulk_index('trac', 'ticket', bulk_tickets)
 search.flush()
