@@ -22,9 +22,17 @@ def hello():
             'sort': [
                 {'changetime': 'desc'}
             ],
+            'facets': {
+                'status': {
+                    'terms': {'field': 'status'}
+                },
+                'reporter': {
+                    'terms': {'field': 'reporter'}
+                }
+            },
             'highlight': {
-                "pre_tags" : ["<b>"],
-                "post_tags" : ["</b>"],
+                "pre_tags": ["<b>"],
+                "post_tags": ["</b>"],
                 'fields': {
                     '_all': {},
                     'comment.comment': {},

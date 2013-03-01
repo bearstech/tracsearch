@@ -4,19 +4,33 @@
 <body>
     <form action="/" method="GET">
         <input type="text" name="q" value="{{q}}"/>
+        <div id="facets">
+            {% for key in results.facets %}
+                <div class="facet">
+                    <div>{{key}}</div>
+                    {% for term in results.facets[key].terms %}
+                        <span>{{term.term}}: {{term.count}}</span>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+
+    </div>
     </form>
     {% if results %}
  {{ results.hits.total }}
  <ul>
      {% for result in results.hits.hits %}
      <li>
-         <span class="type">{{result['_type']}}</span> {{ result._source.status }} {{ result._source.reporter }} {{ result._source.summary}} <span type="changetime">{{ result._source.changetime }}</span> <br/>
+         {% if result._type == 'ticket' %}
+         <span ># {{result._id}}</span> {{ result._source.status }} {{ result._source.reporter }} {{ result._source.summary}} <span type="changetime">{{ result._source.changetime }}</span> <br/>
          {% for field in result['highlight'] %}
             <i>{{field}}</i>
             {% for value in result['highlight'][field] %}
                 {{value | safe}}
                 {% endfor%}<br>
             {% endfor %}
+         {% endif %}
      </li>
 
  {% endfor %}
