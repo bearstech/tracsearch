@@ -1,4 +1,5 @@
 from pyelasticsearch import ElasticSearch
+from pyelasticsearch.exceptions import ElasticHttpNotFoundError
 
 
 class Search(object):
@@ -6,7 +7,10 @@ class Search(object):
         self.es = ElasticSearch('http://127.0.0.1:9200')
 
     def delete(self):
-        assert self.es.delete_index("trac")['ok']
+        try:
+            assert self.es.delete_index("trac")['ok']
+        except ElasticHttpNotFoundError:
+            pass
 
     def create(self):
         self.es.create_index("trac")
