@@ -5,6 +5,13 @@ Bring the modernity of Elastic Search to the classical Trac.
 
 Trac is a nice tool, but it search engine is confusing.
 
+Install it
+----------
+
+Create a nice virtualenv.
+
+    pip install -r requirements.txt
+
 Try it
 ------
 
