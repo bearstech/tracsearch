@@ -3,17 +3,20 @@
     <head>
         <title>Trac Search</title>
         <link rel="stylesheet" href="/components/normalize-css/normalize.css">
-        <link rel="stylesheet" href="/components/typeplate/css/typeplate.css">
+        <link rel="stylesheet" href="/static/styles.css">
     </head>
-<body>
+    <body>
+
+        <div id="main">
+            <h1 class="alpha">Trac Search</h1>
     <form action="/" method="GET">
         <input type="text" name="q" value="{{q}}"/>
         <div id="facets">
             {% for key in results.facets %}
                 <div class="facet">
-                    <div>{{key}}</div>
+                    <span class="type">{{key}}</span>
                     {% for term in results.facets[key].terms %}
-                        <span>{{term.term}}: {{term.count}}</span>
+                    <span class="facet"><span class="term">{{term.term}}</span><span class="count">{{term.count}}</span></span>
                     {% endfor %}
                 </div>
             {% endfor %}
@@ -22,24 +25,31 @@
     </div>
     </form>
     {% if results %}
- {{ results.hits.total }}
- <ul>
+    <div id="result">Results: {{ results.hits.total }}</div>
      {% for result in results.hits.hits %}
-     <li>
+     <div class="response">
          {% if result._type == 'ticket' %}
-         <span ># {{result._id}}</span> {{ result._source.status }} {{ result._source.reporter }} {{ result._source.summary}} <span type="changetime">{{ result._source.changetime }}</span> <br/>
+         <div class="header">
+         <span class="serial">#{{result._id}}</span>
+         <span class="title">{{ result._source.summary}}</span>
+         <span class="status">{{ result._source.status }}</span>
+         <span class="reporter">{{ result._source.reporter }}</span>
+         <span class="changetime">{{ result._source.changetime }}</span>
+     </div>
+         <dl class="lining">
          {% for field in result['highlight'] %}
-            <i>{{field}}</i>
+            <dt>{{field}}</dt>
             {% for value in result['highlight'][field] %}
-                {{value | safe}}
-                {% endfor%}<br>
-            {% endfor %}
+                <dd>…{{value | safe}}…</dd>
+            {% endfor%}
+         {% endfor %}
+         </dl>
          {% endif %}
-     </li>
+     </div>
 
  {% endfor %}
- </ul>
 
  {% endif %}
+ </div>
     </body>
 </html>

@@ -1,0 +1,461 @@
+@import url(http://fonts.googleapis.com/css?family=Signika);
+/*!
++---------------------------------------------------------------------+
+|        _                               _         _                  |
+|       | |_  _   _  _ __    ___  _ __  | |  __ _ | |_  ___           |
+|       | __|| | | || '_ \  / _ \| '_ \ | | / _` || __|/ _ \          |
+|       | |_ | |_| || |_) ||  __/| |_) || || (_| || |_|  __/          |
+|        \__| \__, || .__/  \___|| .__/ |_| \__,_| \__|\___|          |
+|             |___/ |_|          |_|                                  |
+|                                                                     |
+|                                                                     |
+| URL: http://typeplate.com                                           |
+| VERSION: 1.0.1                                                      |
+| Github: https://github.com/typePlate/typeplate.github.com           |
+| AUTHORS: Zachary Kain (@zakkain) & Dennis Gaebel (@gryghostvisuals) |
+| LICENSE: Creative Commmons                                          |
+| http://creativecommons.org/licenses/by/3.0                          |
+|                                                                     |
++---------------------------------------------------------------------+
+*/
+@font-face {
+  font-family: "Ampersand";
+  src: local("Georgia"), local("Garamond"), local("Palatino"), local("Book Antiqua");
+  unicode-range: U+270C;
+}
+@font-face {
+  font-family: "Ampersand";
+  src: local("Georgia");
+  unicode-range: U+270C;
+}
+.ampersand-placeholder {
+  font-family: Verdana, sans-serif;
+}
+.breakword {
+  word-wrap: break-word;
+}
+.normal-wrap {
+  word-wrap: normal;
+}
+.inherit-wrap {
+  word-wrap: auto;
+}
+/**
+ * Dropcap Sass @include
+ * Use the following Sass @include with any selector you feel necessary.
+ *
+	@include dropcap(@float: left, @font-size: 4em, @font-family: inherit, @text-indent: 0, @margin: inherit, @padding: inherit, @color: inherit, @lineHeight: 1, @bg: transparent);
+ *
+ * Extend this object into your custom stylesheet.
+ *
+ */
+.drop-cap:first-letter {
+  float: left;
+  margin: inherit;
+  padding: inherit;
+  font-size: 4em;
+  font-family: inherit;
+  line-height: 1;
+  text-indent: 0;
+  background: transparent;
+  color: inherit;
+}
+html {
+  font: normal 112.5%/1.65 serif;
+}
+body {
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  -o-hyphens: auto;
+  hyphens: auto;
+  word-wrap: break-word;
+  color: #444444;
+}
+.tera {
+  font-size: 117px;
+  font-size: 6.5rem;
+  margin-bottom: 0.25384615384615383rem;
+}
+.giga {
+  font-size: 90px;
+  font-size: 5rem;
+  margin-bottom: 0.33rem;
+}
+.mega {
+  font-size: 72px;
+  font-size: 4rem;
+  margin-bottom: 0.4125rem;
+}
+.alpha {
+  font-size: 60px;
+  font-size: 3.3333333333333335rem;
+  margin-bottom: 0.495rem;
+}
+.beta {
+  font-size: 48px;
+  font-size: 2.6666666666666665rem;
+  margin-bottom: 0.61875rem;
+}
+.gamma {
+  font-size: 36px;
+  font-size: 2rem;
+  margin-bottom: 0.825rem;
+}
+.delta {
+  font-size: 24px;
+  font-size: 1.3333333333333333rem;
+  margin-bottom: 1.2375rem;
+}
+.epsilon {
+  font-size: 21px;
+  font-size: 1.1666666666666667rem;
+  margin-bottom: 1.4142857142857141rem;
+}
+.zeta {
+  font-size: 18px;
+  font-size: 1rem;
+  margin-bottom: 1.65rem;
+}
+h1 {
+  font-size: 60px;
+  font-size: 3.3333333333333335rem;
+  margin-bottom: 0.495rem;
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+  margin-top: 0;
+}
+h2 {
+  font-size: 48px;
+  font-size: 2.6666666666666665rem;
+  margin-bottom: 0.61875rem;
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+  margin-top: 0;
+}
+h3 {
+  font-size: 36px;
+  font-size: 2rem;
+  margin-bottom: 0.825rem;
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+  margin-top: 0;
+}
+h4 {
+  font-size: 24px;
+  font-size: 1.3333333333333333rem;
+  margin-bottom: 1.2375rem;
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+  margin-top: 0;
+}
+h5 {
+  font-size: 21px;
+  font-size: 1.1666666666666667rem;
+  margin-bottom: 1.4142857142857141rem;
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+  margin-top: 0;
+}
+h6 {
+  font-size: 18px;
+  font-size: 1rem;
+  margin-bottom: 1.65rem;
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+  margin-top: 0;
+}
+p {
+  margin: 0 0 1.5em;
+}
+p + p {
+  text-indent: 1.5em;
+  margin-top: -1.5em;
+}
+abbr,
+acronym,
+blockquote,
+code,
+dir,
+kbd,
+listing,
+plaintext,
+q,
+samp,
+tt,
+var,
+xmp {
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  -o-hyphens: none;
+  hyphens: none;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre-wrap;
+}
+pre {
+  white-space: pre;
+}
+code {
+  white-space: pre;
+  font-family: monospace;
+}
+/**
+ * Abbreviations Markup
+ *
+	<abbr title="hyper text markup language">HMTL</abbr>
+ *
+ * Extend this object into your markup.
+ *
+ */
+abbr {
+  font-variant: small-caps;
+  font-weight: 600;
+  text-transform: lowercase;
+  color: #808080;
+}
+abbr:hover {
+  cursor: help;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #222222;
+}
+/**
+ * Lining Definition Style Markup
+ *
+	<dl class="lining">
+		<dt><b></b></dt>
+		<dd></dd>
+	</dl>
+ *
+ * Extend this object into your markup.
+ *
+ */
+.lining dt,
+.lining dd {
+  display: inline;
+  margin: 0;
+}
+.lining dt + dt:before,
+.lining dd + dt:before {
+  content: "\A";
+  white-space: pre;
+}
+.lining dd + dd:before {
+  content: ", ";
+}
+.lining dd:before {
+  content: ": ";
+  margin-left: -0.2rem;
+}
+/**
+ * Dictionary Definition Style Markup
+ *
+	<dl class="dictionary-style">
+		<dt><b></b></dt>
+			<dd></dd>
+	</dl>
+ *
+ * Extend this object into your markup.
+ *
+ */
+.dictionary-style dt {
+  display: inline;
+  counter-reset: definitions;
+}
+.dictionary-style dt + dt:before {
+  content: ", ";
+  margin-left: -0.2rem;
+}
+.dictionary-style dd {
+  display: block;
+  counter-increment: definitions;
+}
+.dictionary-style dd:before {
+  content: counter(definitions, decimal) ". ";
+}
+/**
+ * Stats Tab Markup
+ *
+	<ul class="stats-tabs">
+		<li><a href="#">[value]<b>[name]</b></a></li>
+	</ul>
+ *
+ * Extend this object into your markup.
+ *
+ */
+.stats-tabs {
+  padding: 0;
+}
+.stats-tabs li {
+  display: inline-block;
+  margin: 0 0.625rem 0 0;
+  padding: 0 0.625rem 0 0;
+  border-right: 0.125rem solid #cccccc;
+}
+.stats-tabs li:last-child {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.stats-tabs li a {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.stats-tabs li a b {
+  display: block;
+  margin: 0.125rem 0 0 0;
+  font-size: 0.875rem;
+  font-weight: normal;
+}
+/**
+ * Blockquote Markup
+ *
+	<blockquote cite="">
+		<p>&Prime;&Prime;</p>
+		<cite>
+			<small><a href=""></a></small>
+		</cite>
+	</blockquote>
+ *
+ * Extend this object into your markup.
+ *
+ */
+.cite {
+  display: block;
+  font-size: 0.875em;
+  text-align: right;
+}
+/**
+ * Pull Quotes Markup
+ *
+	<aside class="pull-quote">
+		<blockquote>
+			<p></p>
+		</blockquote>
+	</aside>
+ *
+ * Extend this object into your custom stylesheet.
+ *
+ */
+.pull-quote {
+  position: relative;
+  padding: 1em;
+}
+.pull-quote:before,
+.pull-quote:after {
+  height: 1em;
+  opacity: 0.15;
+  position: absolute;
+  font-size: 4em;
+}
+.pull-quote:before {
+  content: '“';
+  top: 0em;
+  left: 0em;
+}
+.pull-quote:after {
+  content: '”';
+  bottom: 0em;
+  right: 0em;
+}
+/**
+ * Figures Markup
+ *
+	<figure>
+		<figcaption>
+			<strong>Fig. 4.2 | </strong>Type Anatomy, an excerpt from Mark Boulton's book<cite title="http://designingfortheweb.co.uk/book/part3/part3_chapter11.php">"Designing for the Web"</cite>
+		</figcaption>
+	</figure>
+ *
+ * Extend this object into your markup.
+ *
+ */
+/**
+ * Footnote Markup : Replace 'X' with your unique number for each footnote
+ *
+	<article>
+		<p><sup><a href="#fn-itemX" id="fn-returnX"></a></sup></p>
+		<footer>
+			<ol class="foot-notes">
+				<li id="fn-itemX"><a href="#fn-returnX">↩</a></li>
+			</ol>
+		</footer>
+	</article>
+ *
+ * Extend this object into your markup.
+ *
+ */
+body {
+  font-family: "Signika";
+  background-color: silver;
+}
+h1 {
+  float: right;
+  color: #444444;
+}
+input {
+  font-size: 150%;
+}
+#main {
+  background-color: white;
+  padding: 10px;
+  width: 800px;
+  margin: auto;
+  border-right: thin solid #444444;
+  border-left: thin solid #444444;
+}
+div.facet {
+  font-size: 65%;
+  margin: 4px;
+}
+span.facet {
+  padding: 2px;
+  margin: 1px;
+  border: thin #444444 solid;
+  background-color: #c0c0c0;
+}
+.facet .count {
+  color: white;
+  margin-left: 6px;
+}
+dl {
+  margin-top: 0;
+  margin-left: 50px;
+}
+dt {
+  font-size: 65%;
+}
+dd {
+  color: #c0c0c0;
+}
+dd b {
+  color: #444444;
+}
+.serial {
+  color: #c0c0c0;
+}
+.status,
+.reporter,
+.changetime {
+  /*border: thin @dark solid;*/
+
+  background-color: #c0c0c0;
+  color: white;
+  font-size: 65%;
+  padding: 0 2px 0 2px;
+  margin: 2px;
+}
+.header {
+  margin-bottom: 5px;
+  border-top: thin solid #c0c0c0;
+  padding: 2px;
+}

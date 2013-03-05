@@ -1,0 +1,66 @@
+@import "components/typeplate/less/typeplate.less";
+@import url(http://fonts.googleapis.com/css?family=Signika);
+@dark: #444444;
+@light: silver;
+body {
+    font-family: "Signika";
+    background-color: silver;
+}
+h1 {
+    float: right;
+    color: @dark;
+}
+input {
+    font-size: 150%;
+}
+#main {
+    background-color: white;
+    padding: 10px;
+    width: 800px;
+    margin: auto;
+    border-right: thin solid @dark;
+    border-left: thin solid @dark;
+}
+div.facet {
+    font-size: 65%;
+    margin: 4px;
+}
+span.facet {
+    padding: 2px;
+    margin: 1px;
+    border: thin @dark solid;
+    background-color: @light;
+}
+.facet .count {
+    color: white;
+    margin-left: 6px;
+}
+dl {
+    margin-top: 0;
+    margin-left: 50px;
+}
+dt {
+    font-size: 65%;
+}
+dd {
+    color: @light;
+}
+dd b {
+    color: @dark;
+}
+.serial {
+    color: @light;
+}
+.status, .reporter, .changetime {
+    /*border: thin @dark solid;*/
+    background-color: @light;
+    color: white;
+    font-size: 65%;
+    padding: 0 2px 0 2px;
+    margin: 2px;
+}
+.header {
+    margin-bottom: 5px;
+    border-top: thin solid @light;
+    padding: 2px;
+}
