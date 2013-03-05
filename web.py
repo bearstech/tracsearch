@@ -1,9 +1,15 @@
 from flask import Flask, render_template, request
+from flask.helpers import send_from_directory
 
 from pyelasticsearch import ElasticSearch
 
 app = Flask(__name__)
 es = ElasticSearch('http://127.0.0.1:9200/')
+
+
+@app.route("/components/<path:filename>")
+def components(filename):
+    return send_from_directory("components", filename)
 
 
 @app.route("/", methods=['GET'])
