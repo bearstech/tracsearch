@@ -3,8 +3,12 @@ from flask.helpers import send_from_directory
 
 from pyelasticsearch import ElasticSearch
 
+from trac import Trac
+
+
 app = Flask(__name__)
 es = ElasticSearch('http://127.0.0.1:9200/')
+trac = Trac()
 
 
 @app.route("/components/<path:filename>")
@@ -49,7 +53,10 @@ def hello():
         }
         results = es.search(query, index='trac')
 
-    return render_template('index.html', results=results, q=q)
+    return render_template('index.html',
+                           results=results,
+                           q=q,
+                           trac_root=trac.web)
 
 app.debug = True
 

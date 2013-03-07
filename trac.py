@@ -1,4 +1,5 @@
 import os
+from urlparse import urlparse
 import xmlrpclib
 import datetime
 
@@ -7,6 +8,8 @@ class Trac(object):
 
     def __init__(self):
         uri = "%s/trac/rpc" % os.environ['TRAC_URL']
+        p = urlparse(uri)
+        self.web = "%s://%s" % (p.scheme, p.hostname)
         self.trac = xmlrpclib.ServerProxy(uri)
 
     def wiki(self):
@@ -18,10 +21,10 @@ class Trac(object):
                 body = ''
                 print "Oups sur la page %s" % info['name']
             data = {'name': info['name'],
-                  'author': info['author'],
-                  'version': info['version'],
-                  'lastModified': info['lastModified'].value,
-                  'body': body }
+                    'author': info['author'],
+                    'version': info['version'],
+                    'lastModified': info['lastModified'].value,
+                    'body': body}
             yield data
 
     def ticket(self, since):
@@ -40,7 +43,6 @@ class Trac(object):
                 for time, author, field, oldvalue, newvalue, permanent in self.trac.ticket.changeLog(t):
                     if field == 'comment':
                         comments.append({'author': author, 'time': time.value, 'comment': newvalue})
-            except: #  xml trouble
+            except:  # xml trouble
                 pass
             yield attributes, comments
-
