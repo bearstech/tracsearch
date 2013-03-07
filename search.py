@@ -3,8 +3,8 @@ from pyelasticsearch.exceptions import ElasticHttpNotFoundError
 
 
 class Search(object):
-    def __init__(self):
-        self.es = ElasticSearch('http://127.0.0.1:9200')
+    def __init__(self, url):
+        self.es = ElasticSearch(url)
 
     def delete(self):
         try:
