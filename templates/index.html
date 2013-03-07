@@ -1,9 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8"/>
         <title>Trac Search</title>
-        <link rel="stylesheet" href="/components/normalize-css/normalize.css">
-        <link rel="stylesheet" href="/static/styles.css">
+        <link rel="stylesheet" href="/components/normalize-css/normalize.css"/>
+        <link rel="stylesheet" href="/static/styles.css"/>
     </head>
     <body>
 
@@ -15,8 +16,12 @@
             {% for key in results.facets %}
                 <div class="facet">
                     <span class="type">{{key}}</span>
+                    <input type="hidden" name="facet_{{key}}" value="{{facets}}"/>
                     {% for term in results.facets[key].terms %}
-                    <span class="facet"><span class="term">{{term.term}}</span><span class="count">{{term.count}}</span></span>
+                    <span class="facet" data-facet="{{key}}" data-term="{{term.term}}">
+                        <span class="term">{{term.term}}</span>
+                        <span class="count">{{term.count}}</span>
+                    </span>
                     {% endfor %}
                 </div>
             {% endfor %}
@@ -51,5 +56,15 @@
 
  {% endif %}
  </div>
+ <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+ <script language="javascript">
+     $(function() {
+         $('span.facet').click(function(evt) {
+            var sel = 'input[name="facet_' + this.dataset.facet + '"]';
+            $(sel).val(this.dataset.term);
+            $('form').submit();
+         });
+     });
+ </script>
     </body>
 </html>
