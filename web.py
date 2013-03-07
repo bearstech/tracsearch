@@ -1,14 +1,18 @@
+from ConfigParser import ConfigParser
+
 from flask import Flask, render_template, request
 from flask.helpers import send_from_directory
-
 from pyelasticsearch import ElasticSearch
 
 from trac import Trac
 
 
+config = ConfigParser()
+config.read(['tracsearch.ini'])
+
 app = Flask(__name__)
-es = ElasticSearch('http://127.0.0.1:9200/')
-trac = Trac()
+es = ElasticSearch(config.get('elasticsearch', 'url', 'http://127.0.0.1:9200/'))
+trac = Trac(config.get('trac', 'url', 'http://robert:password@127.0.0.1/trac'))
 
 
 @app.route("/components/<path:filename>")
@@ -58,7 +62,7 @@ def hello():
                            q=q,
                            trac_root=trac.web)
 
-app.debug = True
+app.debug = config.get('web', 'debug', False)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(config.get('web', 'host', '127.0.0.1'))
