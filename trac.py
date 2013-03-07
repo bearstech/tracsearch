@@ -1,4 +1,3 @@
-import os
 from urlparse import urlparse
 import xmlrpclib
 import datetime
@@ -6,8 +5,8 @@ import datetime
 
 class Trac(object):
 
-    def __init__(self):
-        uri = "%s/trac/rpc" % os.environ['TRAC_URL']
+    def __init__(self, url):
+        uri = "%s/trac/rpc" % url
         p = urlparse(uri)
         self.web = "%s://%s" % (p.scheme, p.hostname)
         self.trac = xmlrpclib.ServerProxy(uri)

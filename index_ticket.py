@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
 import datetime
+import os
+
 from trac import Trac
 from search import Search
 
 
-trac = Trac()
+trac = Trac(os.environ['TRAC_URL'])
 search = Search()
 search.recreate()
 
