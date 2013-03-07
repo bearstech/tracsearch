@@ -25,7 +25,7 @@
     </div>
     </form>
     {% if results %}
-    <div id="result">Results: {{ results.hits.total }}</div>
+    <div id="result">Results: {{ results.hits.total }} ({{ results.took }} ms)</div>
      {% for result in results.hits.hits %}
      <div class="response">
          {% if result._type == 'ticket' %}

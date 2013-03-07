@@ -56,7 +56,6 @@ def hello():
             }
         }
         results = es.search(query, index='trac')
-
     return render_template('index.html',
                            results=results,
                            q=q,
