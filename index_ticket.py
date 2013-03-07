@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 
 import datetime
-import os
+from ConfigParser import ConfigParser
 
 from trac import Trac
 from search import Search
 
 
-trac = Trac(os.environ['TRAC_URL'])
-search = Search()
-search.recreate()
+config = ConfigParser()
+config.read(['tracsearch.ini'])
+trac = Trac(config.get('trac', 'url', None))
+search = Search(config.get('elasticsearch', 'url', 'http://127.0.0.1:9200'))
 
-period = datetime.timedelta(30)
+period = datetime.timedelta(int(config.get('index:ticket', 'timedelta', 30)))
 bulk_tickets = []
 for ticket, comments in trac.ticket(period):
     print ticket['summary']

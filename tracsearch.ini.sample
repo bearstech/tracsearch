@@ -7,3 +7,6 @@ url=https://robert:p455w0rd@trac.toto.com
 [web]
 host=127.0.0.1
 debug=1
+
+[index:ticket]
+timedelta=30
