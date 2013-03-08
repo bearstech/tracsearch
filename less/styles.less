@@ -10,6 +10,10 @@ h1 {
     float: right;
     color: @dark;
 }
+a {
+    text-decoration: none;
+    color: black;
+}
 input {
     font-size: 150%;
 }
@@ -25,11 +29,16 @@ div.facet {
     font-size: 65%;
     margin: 4px;
 }
-span.facet {
+button.facet {
     padding: 2px;
     margin: 1px;
     border: thin @dark solid;
     background-color: @light;
+}
+.facet.selected {
+    color: @light;
+    border: thin @light solid;
+    background-color: @dark;
 }
 .facet .count {
     color: white;

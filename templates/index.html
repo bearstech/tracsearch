@@ -16,12 +16,12 @@
             {% for key in results.facets %}
                 <div class="facet">
                     <span class="type">{{key}}</span>
-                    <input type="hidden" name="facet_{{key}}" value="{{facets}}"/>
+                    <input type="hidden" name="facet_{{key}}" value="{{facets[key]}}"/>
                     {% for term in results.facets[key].terms %}
-                    <span class="facet" data-facet="{{key}}" data-term="{{term.term}}">
+                    <button class="facet{% if term.term == facets[key]%} selected{%endif%}" data-facet="{{key}}" data-term="{{term.term}}">
                         <span class="term">{{term.term}}</span>
                         <span class="count">{{term.count}}</span>
-                    </span>
+                    </button>
                     {% endfor %}
                 </div>
             {% endfor %}
@@ -59,9 +59,13 @@
  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
  <script language="javascript">
      $(function() {
-         $('span.facet').click(function(evt) {
+         $('button.facet').click(function(evt) {
             var sel = 'input[name="facet_' + this.dataset.facet + '"]';
-            $(sel).val(this.dataset.term);
+            if($(this).hasClass('selected')) {
+                $(sel).val('');
+            } else {
+                $(sel).val(this.dataset.term);
+            }
             $('form').submit();
          });
      });

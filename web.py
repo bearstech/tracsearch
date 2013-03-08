@@ -21,8 +21,10 @@ def components(filename):
 
 
 @app.route("/", methods=['GET'])
-def hello():
+def index():
     q = request.args.get('q', '')
+    facet_status = request.args.get('facet_status', '')
+    facet_reporter = request.args.get('facet_reporter', '')
     if q == '':
         results = None
     else:
@@ -55,11 +57,25 @@ def hello():
                 }
             }
         }
+        if facet_reporter != '' or facet_status != '':
+            query['filter'] = {'term': {}}
+        if facet_status != '':
+            query['facets']['status']['facet_filter'] = {
+                    'term': {'status': facet_status}
+                    }
+            query['filter']['term'] =  {'status': facet_status}
+        if facet_reporter != '':
+            query['facets']['reporter']['facet_filter'] = {
+                    'term': {'reporter': facet_reporter}
+                    }
+            query['filter']['term'] =  {'reporter': facet_reporter}
         results = es.search(query, index='trac')
     return render_template('index.html',
                            results=results,
                            q=q,
-                           trac_root=trac.web)
+                           trac_root=trac.web,
+                           facets={'status': facet_status,
+                                   'reporter': facet_reporter})
 
 app.debug = config.get('web', 'debug', False)
 
