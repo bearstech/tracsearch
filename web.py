@@ -32,7 +32,8 @@ def index():
         query = {
             'query': {
                 'query_string': {
-                    'query': q
+                    'query': q,
+                    'default_operator': 'AND'
                 }
             },
             'sort': [
