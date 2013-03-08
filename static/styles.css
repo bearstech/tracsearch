@@ -409,6 +409,12 @@ a {
 input {
   font-size: 150%;
 }
+button.search {
+  font-size: 150%;
+  color: white;
+  background-color: #c0c0c0;
+  border: none;
+}
 #main {
   background-color: white;
   padding: 10px;

@@ -12,6 +12,7 @@
             <h1 class="alpha">Trac Search</h1>
     <form action="/" method="GET">
         <input type="text" name="q" value="{{q}}"/>
+        <button class="search">Search</button>
         <div id="facets">
             {% for key in results.facets %}
                 <div class="facet">
@@ -66,6 +67,9 @@
             } else {
                 $(sel).val(this.dataset.term);
             }
+            $('form').submit();
+         });
+         $('button.search').click(function(evt) {
             $('form').submit();
          });
      });
