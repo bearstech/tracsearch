@@ -1,36 +1,73 @@
 @import "components/typeplate/less/typeplate.less";
 @import url(http://fonts.googleapis.com/css?family=Signika);
+@maroon: #3d2d29;
+@darkblue: #2a4959;
+@blue: #76a5a8;
+@light: #b3ccb7;
+@beige: #e5d8b5;
+
 @dark: #444444;
-@light: silver;
 body {
     font-family: "Signika";
-    background-color: silver;
+    background-color: @maroon;
+    background-image: linear-gradient(@maroon, lighten(@maroon, 5%));
 }
+#main {
+    padding: 10px;
+    width: 800px;
+    margin: auto;
+}
+
+#search {
+    background-color: @darkblue;
+    background-image: linear-gradient(@darkblue, lighten(@darkblue, 10%));
+    color: @light;
+    box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+#results {
+    background-color: @blue;
+    z-index: 1;
+    padding: 3px;
+}
+
+#result {
+    margin-bottom: 10px;
+}
+
+.header, .title {
+    margin: 0;
+    padding: 0;
+    margin-top: -15px;
+}
+.header {
+    margin-top: -15px;
+}
+
 h1 {
     float: right;
-    color: @dark;
+    color: @light;
 }
 a {
     text-decoration: none;
-    color: black;
+    color: @maroon;
 }
 input {
     font-size: 150%;
+    background-color: @light;
+    border: thin @maroon solid;
+    color: @maroon;
 }
 button.search {
     font-size: 150%;
     color: white;
-    background-color: @light;
+    background-color: @blue;
+    background-image: linear-gradient(lighten(@blue, 10%), @blue);
     border: none;
 
-}
-#main {
-    background-color: white;
-    padding: 10px;
-    width: 800px;
-    margin: auto;
-    border-right: thin solid @dark;
-    border-left: thin solid @dark;
 }
 div.facet {
     font-size: 65%;
@@ -39,8 +76,9 @@ div.facet {
 button.facet {
     padding: 2px;
     margin: 1px;
-    border: thin @dark solid;
-    background-color: @light;
+    border: thin @maroon solid;
+    background-color: @beige;
+    color: @maroon;
 }
 .facet.selected {
     color: @light;
@@ -50,6 +88,11 @@ button.facet {
 .facet .count {
     color: white;
     margin-left: 6px;
+}
+.response {
+    margin: 0;
+    padding-top: 2px;
+    background-image: linear-gradient(@blue, lighten(@blue, 5%));
 }
 dl {
     margin-top: 0;
@@ -73,10 +116,4 @@ dd b {
     color: white;
     font-size: 65%;
     padding: 0 2px 0 2px;
-    margin: 2px;
-}
-.header {
-    margin-bottom: 5px;
-    border-top: thin solid @light;
-    padding: 2px;
 }

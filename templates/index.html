@@ -9,70 +9,76 @@
     <body>
 
         <div id="main">
-            <h1 class="alpha">Trac Search</h1>
-    <form action="/" method="GET">
-        <input type="text" name="q" value="{{q}}"/>
-        <button class="search">Search</button>
-        <div id="facets">
-            {% for key in results.facets %}
-                <div class="facet">
-                    <span class="type">{{key}}</span>
-                    <input type="hidden" name="facet_{{key}}" value="{{facets[key]}}"/>
-                    {% for term in results.facets[key].terms %}
-                    <button class="facet{% if term.term == facets[key]%} selected{%endif%}" data-facet="{{key}}" data-term="{{term.term}}">
-                        <span class="term">{{term.term}}</span>
-                        <span class="count">{{term.count}}</span>
-                    </button>
-                    {% endfor %}
+            <div id="search">
+                <h1 class="alpha">Trac Search</h1>
+                <form action="/" method="GET">
+                    <input type="text" name="q" value="{{q}}"/>
+                    <button class="search">Search</button>
+                    <div id="facets">
+                        {% for key in results.facets %}
+                        <div class="facet">
+                            <span class="type">{{key}}</span>
+                            <input type="hidden" name="facet_{{key}}" value="{{facets[key]}}"/>
+                            {% for term in results.facets[key].terms %}
+                            <button class="facet{% if term.term == facets[key]%} selected{%endif%}" data-facet="{{key}}" data-term="{{term.term}}">
+                                <span class="term">{{term.term}}</span>
+                                <span class="count">{{term.count}}</span>
+                            </button>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                </form>
+            </div>
+            <div id="results">
+                {% if results %}
+                <div id="result">Results: {{ results.hits.total }} ({{ results.took }} ms)</div>
+                {% for result in results.hits.hits %}
+                <div class="response">
+                    {% if result._type == 'ticket' %}
+                    <div class="title">
+                        <span class="serial">#{{result._id}}</span>
+                        <a href="{{trac_root}}/trac/ticket/{{result._id}}" class="title">{{ result._source.summary}}</a>
+                    </div>
+                    <div class="header">
+                        <span class="status">{{ result._source.status }}</span>
+                        <span class="reporter">{{ result._source.reporter }}</span>
+                        <span class="changetime">{{ result._source.changetime }}</span>
+                    </div>
+                    <dl class="lining">
+                        {% for field in result['highlight'] %}
+                        <dt>{{field}}</dt>
+                        {% for value in result['highlight'][field] %}
+                        <dd>…{{value | safe}}…</dd>
+                        {% endfor%}
+                        {% endfor %}
+                    </dl>
+                    {% endif %}
                 </div>
-            {% endfor %}
 
+                {% endfor %}
 
-    </div>
-    </form>
-    {% if results %}
-    <div id="result">Results: {{ results.hits.total }} ({{ results.took }} ms)</div>
-     {% for result in results.hits.hits %}
-     <div class="response">
-         {% if result._type == 'ticket' %}
-         <div class="header">
-         <span class="serial">#{{result._id}}</span>
-         <a href="{{trac_root}}/trac/ticket/{{result._id}}" class="title">{{ result._source.summary}}</a>
-         <span class="status">{{ result._source.status }}</span>
-         <span class="reporter">{{ result._source.reporter }}</span>
-         <span class="changetime">{{ result._source.changetime }}</span>
-         </div>
-         <dl class="lining">
-         {% for field in result['highlight'] %}
-            <dt>{{field}}</dt>
-            {% for value in result['highlight'][field] %}
-                <dd>…{{value | safe}}…</dd>
-            {% endfor%}
-         {% endfor %}
-         </dl>
-         {% endif %}
-     </div>
-
- {% endfor %}
-
- {% endif %}
- </div>
- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
- <script language="javascript">
-     $(function() {
-         $('button.facet').click(function(evt) {
-            var sel = 'input[name="facet_' + this.dataset.facet + '"]';
-            if($(this).hasClass('selected')) {
-                $(sel).val('');
-            } else {
-                $(sel).val(this.dataset.term);
-            }
-            $('form').submit();
-         });
-         $('button.search').click(function(evt) {
-            $('form').submit();
-         });
-     });
- </script>
+                {% endif %}
+            </div>
+        </div>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script language="javascript">
+            $(function() {
+                $('button.facet').click(function(evt) {
+                    var sel = 'input[name="facet_' + this.dataset.facet + '"]';
+                    if($(this).hasClass('selected')) {
+                        $(sel).val('');
+                    } else {
+                        $(sel).val(this.dataset.term);
+                    }
+                    $('form').submit();
+                });
+                $('button.search').click(function(evt) {
+                    $('form').submit();
+                });
+            });
+        </script>
     </body>
 </html>

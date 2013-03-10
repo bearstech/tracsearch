@@ -396,32 +396,60 @@ h6 {
  */
 body {
   font-family: "Signika";
-  background-color: silver;
+  background-color: #3d2d29;
+  background-image: linear-gradient(#3d2d29, #4c3833);
+}
+#main {
+  padding: 10px;
+  width: 800px;
+  margin: auto;
+}
+#search {
+  background-color: #2a4959;
+  background-image: linear-gradient(#2a4959, #3a657c);
+  color: #b3ccb7;
+  box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  padding: 5px;
+  position: relative;
+  z-index: 2;
+}
+#results {
+  background-color: #76a5a8;
+  z-index: 1;
+  padding: 3px;
+}
+#result {
+  margin-bottom: 10px;
+}
+.header,
+.title {
+  margin: 0;
+  padding: 0;
+  margin-top: -15px;
+}
+.header {
+  margin-top: -15px;
 }
 h1 {
   float: right;
-  color: #444444;
+  color: #b3ccb7;
 }
 a {
   text-decoration: none;
-  color: black;
+  color: #3d2d29;
 }
 input {
   font-size: 150%;
+  background-color: #b3ccb7;
+  border: thin #3d2d29 solid;
+  color: #3d2d29;
 }
 button.search {
   font-size: 150%;
   color: white;
-  background-color: #c0c0c0;
+  background-color: #76a5a8;
+  background-image: linear-gradient(#95b9bc, #76a5a8);
   border: none;
-}
-#main {
-  background-color: white;
-  padding: 10px;
-  width: 800px;
-  margin: auto;
-  border-right: thin solid #444444;
-  border-left: thin solid #444444;
 }
 div.facet {
   font-size: 65%;
@@ -430,17 +458,23 @@ div.facet {
 button.facet {
   padding: 2px;
   margin: 1px;
-  border: thin #444444 solid;
-  background-color: #c0c0c0;
+  border: thin #3d2d29 solid;
+  background-color: #e5d8b5;
+  color: #3d2d29;
 }
 .facet.selected {
-  color: #c0c0c0;
-  border: thin #c0c0c0 solid;
+  color: #b3ccb7;
+  border: thin #b3ccb7 solid;
   background-color: #444444;
 }
 .facet .count {
   color: white;
   margin-left: 6px;
+}
+.response {
+  margin: 0;
+  padding-top: 2px;
+  background-image: linear-gradient(#76a5a8, #86afb2);
 }
 dl {
   margin-top: 0;
@@ -450,27 +484,21 @@ dt {
   font-size: 65%;
 }
 dd {
-  color: #c0c0c0;
+  color: #b3ccb7;
 }
 dd b {
   color: #444444;
 }
 .serial {
-  color: #c0c0c0;
+  color: #b3ccb7;
 }
 .status,
 .reporter,
 .changetime {
   /*border: thin @dark solid;*/
 
-  background-color: #c0c0c0;
+  background-color: #b3ccb7;
   color: white;
   font-size: 65%;
   padding: 0 2px 0 2px;
-  margin: 2px;
-}
-.header {
-  margin-bottom: 5px;
-  border-top: thin solid #c0c0c0;
-  padding: 2px;
 }
