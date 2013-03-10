@@ -431,8 +431,10 @@ body {
   margin-top: -15px;
 }
 h1 {
-  float: right;
-  color: #b3ccb7;
+  color: #e5d8b5;
+  display: block;
+  transform: rotate(-90deg) translate(-140px, -200px);
+  position: fixed;
 }
 a {
   text-decoration: none;
@@ -443,6 +445,7 @@ input {
   background-color: #b3ccb7;
   border: thin #3d2d29 solid;
   color: #3d2d29;
+  width: 670px;
 }
 button.search {
   font-size: 150%;
@@ -450,6 +453,9 @@ button.search {
   background-color: #76a5a8;
   background-image: linear-gradient(#95b9bc, #76a5a8);
   border: none;
+  float: left;
+  margin-right: 5px;
+  margin-top: 1px;
 }
 div.facet {
   font-size: 65%;
@@ -481,13 +487,14 @@ dl {
   margin-left: 50px;
 }
 dt {
+  color: #b3ccb7;
   font-size: 65%;
 }
 dd {
-  color: #b3ccb7;
+  color: #e5d8b5;
 }
 dd b {
-  color: #444444;
+  color: #3d2d29;
 }
 .serial {
   color: #b3ccb7;
