@@ -13,7 +13,7 @@ body {
     background-image: linear-gradient(@maroon, lighten(@maroon, 5%));
 }
 #main {
-    padding: 10px;
+    padding: 0;
     width: 800px;
     margin: auto;
 }
@@ -22,8 +22,9 @@ body {
     background-color: @darkblue;
     background-image: linear-gradient(@darkblue, lighten(@darkblue, 10%));
     color: @light;
-    box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+    box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.7);
     padding: 5px;
+    margin: 0;
     position: relative;
     z-index: 2;
 }
@@ -48,10 +49,11 @@ body {
 }
 
 h1 {
-    color: @beige;
+    color: fadeout(@beige, 80%);
     display: block;
-    transform: rotate(-90deg) translate(-140px, -200px);
+    transform: rotate(-90deg) translate(-170px, -230px);
     position: fixed;
+    z-index: -1;
 }
 a {
     text-decoration: none;
