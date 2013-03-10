@@ -45,7 +45,7 @@
                     <div class="header">
                         <span class="status">{{ result._source.status }}</span>
                         <span class="reporter">{{ result._source.reporter }}</span>
-                        <span class="changetime">{{ result._source.changetime }}</span>
+                        <span class="changetime">change: {{ result._source.changetime | nicedate }}</span>
                     </div>
                     <dl class="lining">
                         {% for field in result['highlight'] %}

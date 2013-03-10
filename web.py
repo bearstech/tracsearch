@@ -2,6 +2,7 @@ from ConfigParser import ConfigParser
 
 from flask import Flask, render_template, request
 from flask.helpers import send_from_directory
+from jinja2 import escape
 from pyelasticsearch import ElasticSearch
 
 from trac import Trac
@@ -13,6 +14,16 @@ config.read(['tracsearch.ini'])
 app = Flask(__name__)
 es = ElasticSearch(config.get('elasticsearch', 'url', 'http://127.0.0.1:9200/'))
 trac = Trac(config.get('trac', 'url', 'http://robert:password@127.0.0.1/trac'))
+
+
+@app.template_filter('nicedate')
+def nicedate(value):
+    value = escape(value)
+    year = value[0:4]
+    month = value[4:6]
+    day = value[6:8]
+    time = value[9:17]
+    return "%s-%s-%s %s" % (year, month, day, time)
 
 
 @app.route("/components/<path:filename>")
