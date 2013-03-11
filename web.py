@@ -34,6 +34,12 @@ def components(filename):
 @app.route("/", methods=['GET'])
 def index():
     q = request.args.get('q', '')
+    facets = ['status', 'reporter', 'owner', 'priority', 'cc', 'keywords', 'component']
+    selected = {}
+    for facet in facets:
+        a = request.args.get('facet_%s' % facet, '')
+        if a != '':
+            selected[facet] = a
     facet_status = request.args.get('facet_status', '')
     facet_reporter = request.args.get('facet_reporter', '')
     if q == '':
@@ -50,14 +56,7 @@ def index():
             'sort': [
                 {'changetime': 'desc'}
             ],
-            'facets': {
-                'status': {
-                    'terms': {'field': 'status'}
-                },
-                'reporter': {
-                    'terms': {'field': 'reporter'}
-                }
-            },
+            'facets': {},
             'highlight': {
                 "pre_tags": ["<b>"],
                 "post_tags": ["</b>"],
@@ -69,25 +68,23 @@ def index():
                 }
             }
         }
-        if facet_reporter != '' or facet_status != '':
+        for facet in facets:
+            query['facets'][facet] = {'terms': {'field': facet}}
+
+        if selected != {}:
             query['filter'] = {'term': {}}
-        if facet_status != '':
-            query['facets']['status']['facet_filter'] = {
-                    'term': {'status': facet_status}
-                    }
-            query['filter']['term'] =  {'status': facet_status}
-        if facet_reporter != '':
-            query['facets']['reporter']['facet_filter'] = {
-                    'term': {'reporter': facet_reporter}
-                    }
-            query['filter']['term'] =  {'reporter': facet_reporter}
+        for facet, value in selected.iteritems():
+            query['facets'][facet]['facet_filter'] = {
+                'term': {facet: value}
+            }
+            query['filter']['term'] = {facet: value}
+
         results = es.search(query, index='trac')
     return render_template('index.html',
                            results=results,
                            q=q,
                            trac_root=trac.web,
-                           facets={'status': facet_status,
-                                   'reporter': facet_reporter})
+                           facets=selected)
 
 app.debug = config.get('web', 'debug', False)
 
