@@ -66,18 +66,18 @@ def index():
                     'description': {},
                     'summary': {}
                 }
-            }
+            },
+            'filter': {}
         }
         for facet in facets:
-            query['facets'][facet] = {'terms': {'field': facet}}
+            query['facets'][facet] = {
+                'terms': {'field': facet}
+            }
+            if selected != {}:
+                query['facets'][facet]['facet_filter'] = {'term': selected}
 
         if selected != {}:
-            query['filter'] = {'term': {}}
-        for facet, value in selected.iteritems():
-            query['facets'][facet]['facet_filter'] = {
-                'term': {facet: value}
-            }
-            query['filter']['term'] = {facet: value}
+            query['filter'] = {'term': selected}
 
         results = es.search(query, index='trac')
     return render_template('index.html',
