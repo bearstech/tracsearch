@@ -17,22 +17,42 @@ Try it
 
 Launch a local elastic.
 
-Export your trac URL
+Configure
 
-    export TRAC_URL=https://bob:toto@my.wonderful.trac/
+    cp tracsearch.ini.sample tracsearch.ini
+    vim tracsearch.ini
 
-Try the scripts
+Index some tickets
 
-    ./index_wiki.py
     ./index_ticket.py
 
-Install [head](http://mobz.github.com/elasticsearch-head/) in your elastic and watch your datas.
+Launch the web application
+
+    python web.py
+
+Deploy it
+---------
+
+Use supervisord to launch the web application.
+Use the source folder as virtualenv folder.
+
+Edit _/etc/supervisor/conf.d/tracsearch.conf_
+
+    [program:tracsearch]
+    user=tracsearch
+    command=/opt/tracsearch/bin/python web.py
+    directory=/opt/tracsearch
+    environment=PATH="/opt/tracsearch/bin"
+
+For now, there is no automatic indexation.
 
 Todo
 ----
 
- * √ Index wiki, tiket and comment
- * _ Web UI
+ * √ Index ticket and comment
+ * _ Index wiki
+ * √ Web UI
+ * _ Time line
  * _ Multiple Trac
  * _ Trac module to live index
  * _ Redmine variant
