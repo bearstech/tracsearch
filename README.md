@@ -51,9 +51,9 @@ For now, there is no automatic indexation.
 Todo
 ----
 
- - [x] Index ticket and comment
+ - [X] Index ticket and comment
  - [ ] Index wiki
- - [x] Web UI
+ - [X] Web UI
  - [ ] Time line
  - [ ] Multiple Trac
  - [ ] Trac module to live index
