@@ -5,6 +5,8 @@ Bring the modernity of Elastic Search to the classical Trac.
 
 Trac is a nice tool, but it search engine is confusing.
 
+![Screenshot](screenshot.png)
+
 Install it
 ----------
 
@@ -49,13 +51,13 @@ For now, there is no automatic indexation.
 Todo
 ----
 
- * √ Index ticket and comment
- * _ Index wiki
- * √ Web UI
- * _ Time line
- * _ Multiple Trac
- * _ Trac module to live index
- * _ Redmine variant
+ - [x] Index ticket and comment
+ - [ ] Index wiki
+ - [x] Web UI
+ - [ ] Time line
+ - [ ] Multiple Trac
+ - [ ] Trac module to live index
+ - [ ] Redmine variant
 
 Licence
 -------
