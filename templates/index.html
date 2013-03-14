@@ -38,6 +38,7 @@
                         {% endfor %}
                         </table>
                     </div>
+                    <div id="info"></div>
                     {% endif %}
                 </form>
             </div>
@@ -102,6 +103,7 @@
                     }
                 });
                 var width = 700;
+                var format = d3.time.format("%Y-%m-%d");
                 var w = width / values.length,
                     h = 30;
                 var x = d3.scale.linear()
@@ -120,6 +122,14 @@
                     .enter().append("rect")
                     .attr("x", function(d, i) { return x(d.time); })
                     .attr("y", function(d) { return h - y(d.value) - .5; })
+                    .on('mouseover', function(d) {
+                        var t = new Date(d.time);
+                        console.log(d.time);
+                        console.log(t);
+                        d3.select("#info").text(format(t) + ' : ' + d.value);
+                    }).on('mouseout', function() {
+                        d3.select('#info').text('');
+                    })
                     .attr("width", 10)
                     .attr("height", function(d) { return y(d.value); });
                 chart.append("line")
