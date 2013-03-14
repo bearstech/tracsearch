@@ -40,8 +40,6 @@ def index():
         a = request.args.get('facet_%s' % facet, '')
         if a != '':
             selected[facet] = a
-    facet_status = request.args.get('facet_status', '')
-    facet_reporter = request.args.get('facet_reporter', '')
     if q == '':
         results = None
     else:
@@ -56,7 +54,14 @@ def index():
             'sort': [
                 {'changetime': 'desc'}
             ],
-            'facets': {},
+            'facets': {
+                'changetime': {
+                    'date_histogram': {
+                        'field': 'changetime',
+                        'interval': 'day'
+                    }
+                }
+            },
             'highlight': {
                 "pre_tags": ["<b>"],
                 "post_tags": ["</b>"],
@@ -80,6 +85,7 @@ def index():
             query['filter'] = {'term': selected}
 
         results = es.search(query, index='trac')
+        print results['facets']['changetime']
     return render_template('index.html',
                            results=results,
                            q=q,

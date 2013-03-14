@@ -47,7 +47,7 @@ class Search(object):
                             'include_in_parent': True
                         },
                         'changetime': {
-                            'type': 'datetime',
+                            'type': 'date',
                             'store': 'yes'
                         }
                     }

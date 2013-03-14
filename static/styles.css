@@ -511,3 +511,7 @@ dd b {
   font-size: 65%;
   padding: 0 2px 0 2px;
 }
+.chart rect {
+  fill: #e5d8b5;
+  stroke: #3d2d29;
+}

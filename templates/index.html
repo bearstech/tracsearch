@@ -16,20 +16,29 @@
                     <button class="search">Search</button>
                     <div id="facets">
                         {% for key in results.facets %}
-                        <div class="facet">
-                            <span class="type">{{key}}</span>
-                            <input type="hidden" name="facet_{{key}}" value="{{facets[key]}}"/>
-                            {% for term in results.facets[key].terms %}
-                            <button class="facet{% if term.term == facets[key]%} selected{%endif%}" data-facet="{{key}}" data-term="{{term.term}}">
-                                <span class="term">{{term.term}}</span>
-                                <span class="count">{{term.count}}</span>
-                            </button>
-                            {% endfor %}
-                        </div>
+                            {% if results.facets[key]._type != 'date_histogram' %}
+                            <div class="facet">
+                                <span class="type">{{key}}</span>
+                                <input type="hidden" name="facet_{{key}}" value="{{facets[key]}}"/>
+                                {% for term in results.facets[key].terms %}
+                                <button class="facet{% if term.term == facets[key]%} selected{%endif%}" data-facet="{{key}}" data-term="{{term.term}}">
+                                    <span class="term">{{term.term}}</span>
+                                    <span class="count">{{term.count}}</span>
+                                </button>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         {% endfor %}
-
-
                     </div>
+                    {% if results.facets %}
+                    <div id="datetime">
+                        <table style="display: none;">
+                        {% for entry in results.facets.changetime.entries %}
+                            <tr><td>{{entry.time}}</td><td>{{entry.count}}</td></tr>
+                        {% endfor %}
+                        </table>
+                    </div>
+                    {% endif %}
                 </form>
             </div>
             <div id="results">
@@ -64,6 +73,7 @@
             </div>
         </div>
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
         <script language="javascript">
             $(function() {
                 $('button.facet').click(function(evt) {
@@ -78,6 +88,46 @@
                 $('button.search').click(function(evt) {
                     $('form').submit();
                 });
+                var values = [];
+                var key = null;
+                var max = 0;
+                $('#datetime td').each(function() {
+                    var v = parseInt($(this).html(), 10);
+                    if (key == null) {
+                        key = v;
+                    } else {
+                        values.push({time: key, value: v});
+                        key = null;
+                        max = Math.max(max, v);
+                    }
+                });
+                var width = 700;
+                var w = width / values.length,
+                    h = 30;
+                var x = d3.scale.linear()
+                    .domain([values[0].time, values[values.length - 1].time])
+                    .range([0, w]);
+                var y = d3.scale.linear()
+                    .domain([0, max])
+                    .rangeRound([0, h]);
+
+                var chart = d3.select("#datetime").append("svg")
+                    .attr("class", "chart")
+                    .attr("width", w * values.length - 1)
+                    .attr("height", h);
+                chart.selectAll("rect")
+                    .data(values)
+                    .enter().append("rect")
+                    .attr("x", function(d, i) { return x(d.time); })
+                    .attr("y", function(d) { return h - y(d.value) - .5; })
+                    .attr("width", 10)
+                    .attr("height", function(d) { return y(d.value); });
+                chart.append("line")
+                    .attr("x1", 0)
+                    .attr("x2", w * values.length)
+                    .attr("y1", h - .5)
+                    .attr("y2", h - .5)
+                    .style("stroke", "#000");
             });
         </script>
     </body>
