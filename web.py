@@ -83,6 +83,7 @@ def index():
 
         if selected != {}:
             query['filter'] = {'term': selected}
+            query['facets']['changetime']['facet_filter'] = {'term': selected}
 
         results = es.search(query, index='trac')
         print results['facets']['changetime']

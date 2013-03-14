@@ -108,7 +108,7 @@
                     h = 30;
                 var x = d3.scale.linear()
                     .domain([values[0].time, values[values.length - 1].time])
-                    .range([0, w]);
+                    .range([0, width]);
                 var y = d3.scale.linear()
                     .domain([0, max])
                     .rangeRound([0, h]);
@@ -124,8 +124,6 @@
                     .attr("y", function(d) { return h - y(d.value) - .5; })
                     .on('mouseover', function(d) {
                         var t = new Date(d.time);
-                        console.log(d.time);
-                        console.log(t);
                         d3.select("#info").text(format(t) + ' : ' + d.value);
                     }).on('mouseout', function() {
                         d3.select('#info').text('');
@@ -136,8 +134,7 @@
                     .attr("x1", 0)
                     .attr("x2", w * values.length)
                     .attr("y1", h - .5)
-                    .attr("y2", h - .5)
-                    .style("stroke", "#000");
+                    .attr("y2", h - .5);
             });
         </script>
     </body>
