@@ -17,6 +17,11 @@ bulk_tickets = []
 bulk_size = config.getint('elasticsearch', 'bulk_size')
 
 
+def datetimeformat(raw):
+    raw = str(raw)
+    return "%s-%s-%sT%s" % (raw[0:4], raw[4:6], raw[6:8], raw[9:])
+
+
 def bulk_index(search, bulk_tickets):
     search.es.bulk_index('trac', 'ticket', bulk_tickets)
     search.flush()
@@ -24,6 +29,7 @@ def bulk_index(search, bulk_tickets):
 for ticket, comments in trac.ticket(period):
     print ticket['summary']
     ticket['comment'] = []
+    ticket['changetime'] = datetimeformat(ticket['changetime'])
     n = 0
     for comment in comments:
         comment['id'] = "%s_%i" % (ticket['id'], n)
