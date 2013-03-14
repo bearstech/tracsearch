@@ -58,7 +58,7 @@ def index():
                 'changetime': {
                     'date_histogram': {
                         'field': 'changetime',
-                        'interval': 'day'
+                        'interval': 'week'
                     }
                 }
             },
