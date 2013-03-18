@@ -128,10 +128,7 @@
                     var c = $('#datetime svg').offset();
                     dragorigin = d3.event.sourceEvent.clientX - c.left;
                     chart.append('rect')
-                        .attr('fill', '#FFFFFF')
-                        .attr('fill-opacity', '0.5')
-                        .attr('id', 'selection')
-                        .attr("cursor","move");
+                        .attr('id', 'selection');
                 });
                 drag.on('drag', function() {
                     var e = d3.event;
