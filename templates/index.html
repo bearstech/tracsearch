@@ -37,6 +37,7 @@
                             <tr><td>{{entry.time}}</td><td>{{entry.count}}</td></tr>
                         {% endfor %}
                         </table>
+                        <svg width="700" height="30" class="chart" />
                     </div>
                     <div id="info"></div>
                     {% endif %}
@@ -113,10 +114,56 @@
                     .domain([0, max])
                     .rangeRound([0, h]);
 
-                var chart = d3.select("#datetime").append("svg")
-                    .attr("class", "chart")
-                    .attr("width", w * values.length - 1)
-                    .attr("height", h);
+                var chart = d3.select("#datetime svg");
+                var zoom = d3.behavior.zoom();
+                zoom.on('zoom', function() {
+                    console.log(this, arguments);
+                    console.log(d3.event);
+                    console.log(d3.event.sourceEvent.type);
+                })
+                var drag = d3.behavior.drag();
+                var dragorigin;
+                var selection;
+                drag.on("dragstart", function() {
+                    var c = $('#datetime svg').offset();
+                    dragorigin = d3.event.sourceEvent.clientX - c.left;
+                    chart.append('rect')
+                        .attr('fill', '#FFFFFF')
+                        .attr('fill-opacity', '0.5')
+                        .attr('id', 'selection')
+                        .attr("cursor","move");
+                });
+                drag.on('drag', function() {
+                    var e = d3.event;
+                    d3.select('#selection')
+                        .attr("x", dragorigin)
+                        .attr("y", 0)
+                        .attr("width", e.x -dragorigin)
+                        .attr("height", 30);
+                });
+                drag.on("dragend", function() {
+                    var c = $('#datetime svg').offset();
+                    var dragend = d3.event.sourceEvent.clientX - c.left;
+                    var start = x.invert(dragorigin);
+                    var end = x.invert(dragend);
+                    console.log(format(new Date(start)), format(new Date(end)));
+                });
+
+                /*drag.on("drag", function() {
+                    if (selection == null) {
+                        selection = chart.append('rect')
+                            .attr('fill', '#FFFFFF88')
+                            .attr("cursor","move");
+                    }
+                    var e = d3.event;
+                    selection
+                        .attr("x", e.x + e.dx)
+                        .attr("y", e.y + e.dy)
+                        .attr("width", Math.abs(e.dx))
+                        .attr("height", Math.abs(e.dy));
+                });*/
+                chart.call(drag);
+
                 chart.selectAll("rect")
                     .data(values)
                     .enter().append("rect")
