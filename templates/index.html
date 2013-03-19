@@ -13,6 +13,9 @@
                 <form action="/" method="GET">
                     <input type="text" name="q" value="{{q}}"/>
                     <button class="search">Search</button>
+                {% if results %}
+                <div id="result"><div id="score">{{ results.hits.total }}</div><div id="time">{{ results.took }} ms</div></div>
+                {% endif %}
                     <input type="hidden" name="start" value="{{start}}"/>
                     <input type="hidden" name="end" value="{{end}}"/>
                     <div id="facets">
@@ -46,7 +49,6 @@
             </div>
             <div id="results">
                 {% if results %}
-                <div id="result">Results: {{ results.hits.total }} ({{ results.took }} ms)</div>
                 {% for result in results.hits.hits %}
                 <div class="response">
                     {% if result._type == 'ticket' %}
