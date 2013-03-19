@@ -51,13 +51,13 @@ For now, there is no automatic indexation.
 Todo
 ----
 
- - [X] Index ticket and comment
- - [ ] Index wiki
- - [X] Web UI
- - [ ] Time line
- - [ ] Multiple Trac
- - [ ] Trac module to live index
- - [ ] Redmine variant
+ - √ Index ticket and comment
+ - _ Index wiki
+ - √ Web UI
+ - √ Time line
+ - _ Multiple Trac
+ - _ Trac module to live index
+ - _ Redmine variant
 
 Licence
 -------
