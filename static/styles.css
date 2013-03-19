@@ -533,3 +533,8 @@ dd b {
 #datetime line {
   stroke: #3d2d29;
 }
+#datetime button {
+  margin-left: 5px;
+  border: thin solid #3d2d29;
+  background-cursor: #e5d8b5;
+}
