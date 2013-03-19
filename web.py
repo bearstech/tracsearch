@@ -41,7 +41,7 @@ def index():
         if a != '':
             selected[facet] = a
     if q == '':
-        results = None
+        context = {'results': None}
     else:
         # http://www.elasticsearch.org/guide/reference/query-dsl/query-string-query.html
         query = {
