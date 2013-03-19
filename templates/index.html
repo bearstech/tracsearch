@@ -139,6 +139,8 @@
                         .attr("y", 0)
                         .attr("width", e.x -dragorigin)
                         .attr("height", 30);
+                    var t = new Date(x.invert(e.x - dragorigin));
+                    d3.select("#info").text(format(t));
                 });
                 drag.on("dragend", function() {
                     var c = $('#datetime svg').offset();
