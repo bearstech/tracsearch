@@ -14,6 +14,8 @@
                 <form action="/" method="GET">
                     <input type="text" name="q" value="{{q}}"/>
                     <button class="search">Search</button>
+                    <input type="hidden" name="start" value="{{start}}"/>
+                    <input type="hidden" name="end" value="{{end}}"/>
                     <div id="facets">
                         {% for key in results.facets %}
                             {% if results.facets[key]._type != 'date_histogram' %}
@@ -37,7 +39,7 @@
                             <tr><td>{{entry.time}}</td><td>{{entry.count}}</td></tr>
                         {% endfor %}
                         </table>
-                        <svg width="700" height="30" class="chart" />
+                        <svg width="700" height="30" class="chart" /><button id="zoom">-</button>
                     </div>
                     <div id="info"></div>
                     {% endif %}
@@ -144,21 +146,19 @@
                     var start = x.invert(dragorigin);
                     var end = x.invert(dragend);
                     console.log(format(new Date(start)), format(new Date(end)));
+                    $('input[name="start"]').val(start);
+                    $('input[name="end"]').val(end);
+                    $('form').submit();
+                });
+                if ($('input[name="start"]').val() == '') {
+                    $("#zoom").hide();
+                }
+                $("#zoom").on('click', function() {
+                    $('input[name="start"]').val('');
+                    $('input[name="end"]').val('');
+                    $('form').submit();
                 });
 
-                /*drag.on("drag", function() {
-                    if (selection == null) {
-                        selection = chart.append('rect')
-                            .attr('fill', '#FFFFFF88')
-                            .attr("cursor","move");
-                    }
-                    var e = d3.event;
-                    selection
-                        .attr("x", e.x + e.dx)
-                        .attr("y", e.y + e.dy)
-                        .attr("width", Math.abs(e.dx))
-                        .attr("height", Math.abs(e.dy));
-                });*/
                 chart.call(drag);
 
                 chart.selectAll("rect")

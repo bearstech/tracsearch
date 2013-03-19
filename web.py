@@ -85,13 +85,26 @@ def index():
             query['filter'] = {'term': selected}
             query['facets']['changetime']['facet_filter'] = {'term': selected}
 
+        context = dict(q=q,
+                       trac_root=trac.web,
+                       facets=selected)
+        start = request.args.get('start', '')
+        end = request.args.get('end', '')
+        if end != '':
+            filter_ = {'changetime': {
+                'from': int(start),
+                'to': int(end)
+            }
+            }
+            query['filter']['range'] = filter_
+            query['facets']['changetime']['facet_filter'] = {'range': filter_}
+            context['start'] = start
+            context['end'] = end
+
+        print query
         results = es.search(query, index='trac')
-        print results['facets']['changetime']
-    return render_template('index.html',
-                           results=results,
-                           q=q,
-                           trac_root=trac.web,
-                           facets=selected)
+        context['results'] = results
+    return render_template('index.html', **context)
 
 app.debug = config.get('web', 'debug', False)
 
