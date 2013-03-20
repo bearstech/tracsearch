@@ -426,13 +426,14 @@ body {
   line-height: 100%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 #time {
   font-size: 66%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 10px;
+  margin-top: -10px;
 }
 #result {
   margin-bottom: 10px;
@@ -443,6 +444,8 @@ body {
   background-color: #76a5a8;
   padding: 0 20px 0 20px;
   box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.3);
+  height: 100px;
+  text-align: center;
 }
 .header,
 .title {
@@ -457,7 +460,6 @@ h1 {
   color: rgba(229, 216, 181, 0.19999999999999996);
   display: block;
   transform: rotate(-90deg) translate(-170px, -230px);
-  transform: -webkit-rotate(-90deg) -webkit-translate(-170px, -230px);
   position: fixed;
   z-index: -1;
 }
@@ -470,7 +472,7 @@ input {
   background-color: #b3ccb7;
   border: thin #3d2d29 solid;
   color: #3d2d29;
-  width: 610px;
+  width: 580px;
 }
 button.search {
   font-size: 150%;
