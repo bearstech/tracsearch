@@ -460,6 +460,7 @@ h1 {
   color: rgba(229, 216, 181, 0.19999999999999996);
   display: block;
   transform: rotate(-90deg) translate(-170px, -230px);
+  -webkit-transform: rotate(-90deg) translate(-170px, -230px);
   position: fixed;
   z-index: -1;
 }
