@@ -451,10 +451,7 @@ body {
 .title {
   margin: 0;
   padding: 0;
-  margin-top: -15px;
-}
-.header {
-  margin-top: -15px;
+  line-height: 85%;
 }
 h1 {
   color: rgba(229, 216, 181, 0.19999999999999996);
@@ -507,6 +504,7 @@ button.facet {
 }
 .response {
   margin: 0;
+  margin-top: -10px;
   padding-top: 2px;
   background: linear-gradient(#76a5a8, #86afb2);
   background-image: -webkit-linear-gradient(#76a5a8, #86afb2);
