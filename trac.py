@@ -16,7 +16,7 @@ class Trac(object):
         for page in self.trac.wiki.getAllPages():
             info = self.trac.wiki.getPageInfo(page)
             try:
-                body = self.trac.wiki.getPageHTML(page)
+                body = self.trac.wiki.getPage(page)
             except:
                 body = ''
                 print "Oups sur la page %s" % info['name']
