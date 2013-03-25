@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from trac import Trac
-from search import TracSearch
+from search import TracSearch, datetimeformat
 from ConfigParser import ConfigParser
 
 
@@ -13,11 +13,11 @@ search = TracSearch(
     bulk_size=config.getint('elasticsearch', 'bulk_size')
 )
 
-search.recreate()
-
 for wiki in trac.wiki():
     print wiki['name']
+    print wiki
     wiki['id'] = wiki['name']
+    wiki['changetime'] = datetimeformat(wiki['lastModified'])
     search.index('wiki', wiki, bulk=True)
 
 search.flush_bulk('wiki')

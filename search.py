@@ -2,12 +2,18 @@ from pyelasticsearch import ElasticSearch
 from pyelasticsearch.exceptions import ElasticHttpNotFoundError
 
 
+def datetimeformat(raw):
+    raw = str(raw)
+    return "%s-%s-%sT%s" % (raw[0:4], raw[4:6], raw[6:8], raw[9:])
+
+
 class Search(object):
-    def __init__(self, index,  url, bulk_size=100):
+    def __init__(self, index,  url, bulk_size=100, settings=None):
         self._index = index
         self.es = ElasticSearch(url)
         self._bulk = {}
         self.bulk_size = bulk_size
+        self._settings = settings
 
     def delete(self):
         try:
@@ -16,7 +22,8 @@ class Search(object):
             pass
 
     def create(self):
-        self.es.create_index(self._index)
+        assert self.es.create_index(self._index, settings=self._settings)['ok']
+        print self.es.get_settings(self._index)
 
     def recreate(self):
         self.delete()
@@ -45,20 +52,23 @@ class Search(object):
 
 class TracSearch(Search):
     def __init__(self, url, bulk_size=100):
-        super(TracSearch, self).__init__('trac', url, bulk_size)
+        settings = {
+            'settings': {
+                'analysis': {
+                    'analyzer': {
+                        'myHTML': {
+                            'type': 'custom',
+                            'tokenizer': 'lowercase',
+                            'char_filter': ['html_strip']
+                        }
+                    }
+                }
+            }
+        }
+        super(TracSearch, self).__init__('trac', url, bulk_size=bulk_size, settings=settings)
 
     def create(self):
         super(TracSearch, self).create()
-        mapping = {
-            'name': {
-                'boost': 1.0,
-                'index': 'analyzed',
-                'store': 'yes',
-                'type': 'string',
-                "term_vector": "with_positions_offsets"
-            },
-        }
-        self.es.put_mapping(self._index, "wiki", {'properties': mapping})
         mapping = {
                 'ticket': {
                     '_all': {
@@ -95,3 +105,28 @@ class TracSearch(Search):
                     }
                 }
         self.es.put_mapping(self._index, "comment", mapping)
+        mapping = {
+                'wiki': {
+                    '_all': {
+                        'enabled': True
+                        },
+                    'properties': {
+                        'changetime': {
+                            'type': 'date',
+                            'store': 'yes'
+                        },
+                        'body': {
+                            'type': 'string',
+                            'store': 'yes',
+                            'analyzer': 'myHTML'
+                        },
+                        'name': {
+                            'boost': 1.0,
+                            'store': 'yes',
+                            'type': 'string',
+                            "term_vector": "with_positions_offsets"
+                        },
+                    }
+                }
+        }
+        self.es.put_mapping(self._index, "wiki", mapping)

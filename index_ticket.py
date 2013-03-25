@@ -4,7 +4,7 @@ import datetime
 from ConfigParser import ConfigParser
 
 from trac import Trac
-from search import TracSearch
+from search import TracSearch, datetimeformat
 
 
 config = ConfigParser()
@@ -16,11 +16,6 @@ search = TracSearch(
 )
 
 period = datetime.timedelta(config.getint('index:ticket', 'timedelta'))
-
-
-def datetimeformat(raw):
-    raw = str(raw)
-    return "%s-%s-%sT%s" % (raw[0:4], raw[4:6], raw[6:8], raw[9:])
 
 for ticket, comments in trac.ticket(period):
     print ticket['summary']
