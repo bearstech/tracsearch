@@ -1,2 +1,2 @@
 flask
-pyelasticsearch
+pyelasticsearch==0.4
