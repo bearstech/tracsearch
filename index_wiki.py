@@ -15,7 +15,6 @@ search = TracSearch(
 
 for wiki in trac.wiki():
     print wiki['name']
-    print wiki
     wiki['id'] = wiki['name']
     wiki['changetime'] = datetimeformat(wiki['lastModified'])
     search.index('wiki', wiki, bulk=True)
