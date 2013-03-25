@@ -34,7 +34,7 @@ def components(filename):
 @app.route("/", methods=['GET'])
 def index():
     q = request.args.get('q', '')
-    facets = ['status', 'reporter', 'owner', 'priority', 'cc', 'keywords', 'component']
+    facets = ['status', 'reporter', 'owner', 'priority', 'cc', 'keywords', 'component', '_type', 'author']
     selected = {}
     for facet in facets:
         a = request.args.get('facet_%s' % facet, '')
@@ -69,7 +69,9 @@ def index():
                     '_all': {},
                     'comment.comment': {},
                     'description': {},
-                    'summary': {}
+                    'summary': {},
+                    'body': {},
+                    'name': {}
                 }
             },
             'filter': {}
@@ -103,6 +105,7 @@ def index():
 
         print query
         results = es.search(query, index='trac')
+        print results
         context['results'] = results
     return render_template('index.html', **context)
 

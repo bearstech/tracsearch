@@ -526,11 +526,7 @@ dd b {
 .serial {
   color: #b3ccb7;
 }
-.status,
-.reporter,
-.changetime {
-  /*border: thin @dark solid;*/
-
+.header span {
   background-color: #b3ccb7;
   color: white;
   font-size: 65%;
