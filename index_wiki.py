@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 
 from trac import Trac
-from search import Search
+from search import TracSearch
+from ConfigParser import ConfigParser
 
-trac = Trac()
-search = Search()
+
+config = ConfigParser()
+config.read(['tracsearch.ini'])
+trac = Trac(config.get('trac', 'url', None))
+search = TracSearch(
+    config.get('elasticsearch', 'url', 'http://127.0.0.1:9200'),
+    bulk_size=config.getint('elasticsearch', 'bulk_size')
+)
 
 search.recreate()
 
 for wiki in trac.wiki():
     print wiki['name']
-    search.index(wiki, 'trac', 'wiki', id=wiki['name'], bulk=True)
+    wiki['id'] = wiki['name']
+    search.index('wiki', wiki, bulk=True)
 
-search.flush()
+search.flush_bulk('wiki')
