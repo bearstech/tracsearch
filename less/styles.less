@@ -1,16 +1,24 @@
 @import "components/typeplate/less/typeplate.less";
 @import url(http://fonts.googleapis.com/css?family=Signika);
+
+/*Rose and rows, from Kuler*/
+@red: #9C232A;
+@brick: #B53E2E;
+@orange: #D4623F;
+@green: #C4B453;
+@yellow: #FF9D4D;
+
 @maroon: #3d2d29;
 @darkblue: #2a4959;
 @blue: #76a5a8;
 @light: #b3ccb7;
 @beige: #e5d8b5;
-
 @dark: #444444;
+
 body {
     font-family: "Signika";
-    background-color: @maroon;
-    background-image: linear-gradient(@maroon, lighten(@maroon, 5%));
+    background-color: @orange;
+    background-image: linear-gradient(@orange, lighten(@orange, 5%));
 }
 #main {
     padding: 0;
@@ -20,21 +28,49 @@ body {
 }
 
 #search {
-    background-color: @darkblue;
-    background-image: linear-gradient(@darkblue, lighten(@darkblue, 10%));
-    color: @light;
+    background-color: @brick;
+    background-image: linear-gradient(@brick, lighten(@brick, 15%));
+    color: @yellow;
     box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.7);
     padding: 5px;
     margin: 0;
     position: relative;
     z-index: 2;
     min-height: 100px;
+    input {
+        font-size: 150%;
+        background-color: lighten(@green, 20%);
+        border: thin @maroon solid;
+        color: @maroon;
+        width: 580px;
+    }
+    button.search {
+        font-size: 150%;
+        color: @brick;
+        background-color: @yellow;
+        background-image: linear-gradient(lighten(@yellow, 20%), @yellow);
+        border: none;
+        float: left;
+        margin-right: 5px;
+        margin-top: 1px;
+    }
 }
 
 #results {
-    background-color: @blue;
+    background-color: @green;
+    border: thin solid @brick;
     z-index: 1;
     padding: 20px 3px 3px 3px;
+    margin-bottom: 20px;
+    .header, .title {
+        margin: 0;
+        padding: 0;
+        line-height: 85%;
+    }
+
+    .title {
+        font-weight: bold;
+    }
 }
 
 #score {
@@ -59,21 +95,17 @@ body {
     z-index: 3;
     margin-right: -30px;
     border-radius: 50px;
-    background-color: @blue;
+    background-color: @yellow;
+    color: @orange;
     padding: 0 20px 0 20px;
     box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.3);
     height: 100px;
     text-align: center;
 }
 
-.header, .title {
-    margin: 0;
-    padding: 0;
-    line-height: 85%;
-}
 
 h1 {
-    color: fadeout(@beige, 80%);
+    color: fadeout(@yellow, 50%);
     display: block;
     transform: rotate(-90deg) translate(-170px, -230px);
     -webkit-transform: rotate(-90deg) translate(-170px, -230px);
@@ -84,23 +116,6 @@ a {
     text-decoration: none;
     color: @maroon;
 }
-input {
-    font-size: 150%;
-    background-color: @light;
-    border: thin @maroon solid;
-    color: @maroon;
-    width: 580px;
-}
-button.search {
-    font-size: 150%;
-    color: white;
-    background-color: @blue;
-    background-image: linear-gradient(lighten(@blue, 10%), @blue);
-    border: none;
-    float: left;
-    margin-right: 5px;
-    margin-top: 1px;
-}
 div.facet {
     font-size: 65%;
     margin: 4px;
@@ -108,13 +123,13 @@ div.facet {
 button.facet {
     padding: 2px;
     margin: 1px;
-    border: thin @maroon solid;
-    background-color: @beige;
+    border: thin @orange solid;
+    background-color: @green;
     color: @maroon;
 }
 .facet.selected {
-    color: @light;
-    border: thin @light solid;
+    color: @green;
+    border: thin @green solid;
     background-color: @dark;
 }
 .facet .count {
@@ -125,28 +140,29 @@ button.facet {
     margin: 0;
     margin-top: -10px;
     padding-top: 2px;
-    background: linear-gradient(@blue, lighten(@blue, 5%));
-    background-image: -webkit-linear-gradient(@blue, lighten(@blue, 5%));
+    background: linear-gradient(@green, lighten(@green, 5%));
+    background-image: -webkit-linear-gradient(@green, lighten(@green, 5%));
 }
 dl {
     margin-top: 0;
     margin-left: 50px;
 }
 dt {
-    color: @light;
+    color: @brick;
     font-size: 65%;
 }
 dd {
-    color: @beige;
+    color: white;
 }
 dd b {
     color: @maroon;
+    font-weight: normal;
 }
 .serial {
-    color: @light;
+    color: @red;
 }
 .header span {
-    background-color: @light;
+    background-color: @orange;
     color: white;
     font-size: 65%;
     padding: 0 2px 0 2px;
@@ -154,7 +170,7 @@ dd b {
 .chart {
     cursor: col-resize;
     rect {
-        fill: @beige;
+        fill: @yellow;
         stroke: @maroon;
     }
     #selection {
