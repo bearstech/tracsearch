@@ -1,0 +1,181 @@
+@import "components/typeplate/less/typeplate.less";
+@import url(http://fonts.googleapis.com/css?family=Signika);
+@maroon: #3d2d29;
+@darkblue: #2a4959;
+@blue: #76a5a8;
+@light: #b3ccb7;
+@beige: #e5d8b5;
+
+@dark: #444444;
+body {
+    font-family: "Signika";
+    background-color: @maroon;
+    background-image: linear-gradient(@maroon, lighten(@maroon, 5%));
+}
+#main {
+    padding: 0;
+    width: 800px;
+    margin: auto;
+    min-height: 500px;
+}
+
+#search {
+    background-color: @darkblue;
+    background-image: linear-gradient(@darkblue, lighten(@darkblue, 10%));
+    color: @light;
+    box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    min-height: 100px;
+}
+
+#results {
+    background-color: @blue;
+    z-index: 1;
+    padding: 20px 3px 3px 3px;
+}
+
+#score {
+    font-size: 300%;
+    line-height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+#time {
+    font-size: 66%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    margin-top: -10px;
+}
+
+#result {
+    margin-bottom: 10px;
+    float: right;
+    z-index: 3;
+    margin-right: -30px;
+    border-radius: 50px;
+    background-color: @blue;
+    padding: 0 20px 0 20px;
+    box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.3);
+    height: 100px;
+    text-align: center;
+}
+
+.header, .title {
+    margin: 0;
+    padding: 0;
+    line-height: 85%;
+}
+
+h1 {
+    color: fadeout(@beige, 80%);
+    display: block;
+    transform: rotate(-90deg) translate(-170px, -230px);
+    -webkit-transform: rotate(-90deg) translate(-170px, -230px);
+    position: fixed;
+    z-index: -1;
+}
+a {
+    text-decoration: none;
+    color: @maroon;
+}
+input {
+    font-size: 150%;
+    background-color: @light;
+    border: thin @maroon solid;
+    color: @maroon;
+    width: 580px;
+}
+button.search {
+    font-size: 150%;
+    color: white;
+    background-color: @blue;
+    background-image: linear-gradient(lighten(@blue, 10%), @blue);
+    border: none;
+    float: left;
+    margin-right: 5px;
+    margin-top: 1px;
+}
+div.facet {
+    font-size: 65%;
+    margin: 4px;
+}
+button.facet {
+    padding: 2px;
+    margin: 1px;
+    border: thin @maroon solid;
+    background-color: @beige;
+    color: @maroon;
+}
+.facet.selected {
+    color: @light;
+    border: thin @light solid;
+    background-color: @dark;
+}
+.facet .count {
+    color: white;
+    margin-left: 6px;
+}
+.response {
+    margin: 0;
+    margin-top: -10px;
+    padding-top: 2px;
+    background: linear-gradient(@blue, lighten(@blue, 5%));
+    background-image: -webkit-linear-gradient(@blue, lighten(@blue, 5%));
+}
+dl {
+    margin-top: 0;
+    margin-left: 50px;
+}
+dt {
+    color: @light;
+    font-size: 65%;
+}
+dd {
+    color: @beige;
+}
+dd b {
+    color: @maroon;
+}
+.serial {
+    color: @light;
+}
+.header span {
+    background-color: @light;
+    color: white;
+    font-size: 65%;
+    padding: 0 2px 0 2px;
+}
+.chart {
+    cursor: col-resize;
+    rect {
+        fill: @beige;
+        stroke: @maroon;
+    }
+    #selection {
+        fill: white;
+        fill-opacity: 0.2;
+        stroke: none;
+        cursor: move;
+    }
+}
+#info {
+    min-height: 20px;
+    font-size: 65%;
+}
+
+#datetime {
+    line {
+        stroke: @maroon;
+    }
+    button {
+        margin-left: 5px;
+        border: thin solid @maroon;
+        background-cursor: @beige;
+    }
+}
