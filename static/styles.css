@@ -526,11 +526,12 @@ dt {
   font-size: 65%;
 }
 dd {
-  color: white;
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: lighter;
 }
 dd b {
-  color: #3d2d29;
-  font-weight: normal;
+  color: black;
+  font-weight: bolder;
 }
 .serial {
   color: #9c232a;
