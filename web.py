@@ -10,8 +10,11 @@ from trac import Trac
 
 config = ConfigParser()
 config.read(['tracsearch.ini'])
-
 app = Flask(__name__)
+if config.has_section('sentry'):
+    from raven.contrib.flask import Sentry
+    sentry = Sentry(app, dsn=config.get('sentry', 'dsn'))
+
 es = ElasticSearch(config.get('elasticsearch', 'url', 'http://127.0.0.1:9200/'))
 trac = Trac(config.get('trac', 'url', 'http://robert:password@127.0.0.1/trac'))
 
