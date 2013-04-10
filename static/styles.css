@@ -408,7 +408,7 @@ body {
 }
 #search {
   background-color: #b53e2e;
-  background-image: linear-gradient(#b53e2e, #d5695a);
+  background-image: linear-gradient(#8c3024, #b53e2e, #c94533);
   color: #ff9d4d;
   box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.7);
   padding: 5px;
@@ -423,6 +423,7 @@ body {
   border: thin #3d2d29 solid;
   color: #3d2d29;
   width: 580px;
+  padding-left: 10px;
 }
 #search button.search {
   font-size: 150%;
@@ -496,7 +497,7 @@ div.facet {
 button.facet {
   padding: 2px;
   margin: 1px;
-  border: thin #d4623f solid;
+  border: thin #5e5520 solid;
   background-color: #c4b453;
   color: #3d2d29;
 }
