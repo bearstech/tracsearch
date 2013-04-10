@@ -35,7 +35,12 @@ Launch the web application
 Deploy it
 ---------
 
+For now, there is no automatic indexation.
+
+### Virtualenv and supervisord
+
 Use supervisord to launch the web application.
+
 Use the source folder as virtualenv folder.
 
 Edit _/etc/supervisor/conf.d/tracsearch.conf_
@@ -46,18 +51,30 @@ Edit _/etc/supervisor/conf.d/tracsearch.conf_
     directory=/opt/tracsearch
     environment=PATH="/opt/tracsearch/bin"
 
-For now, there is no automatic indexation.
+### Sentry
+
+You can use [Sentry](http://www.getsentry.com/) to watch Tracsearch's errors.
+
+Grab your sentry dsn and add it to tracsearch.ini
+
+    [sentry]
+    dsn=http://public_key:secret_key@example.com/1
+
+You can use Tracseerch without a _sentry_ section in the conf file.
+
 
 Todo
 ----
 
  - √ Index ticket and comment
- - _ Index wiki
+ - √ Index wiki
  - √ Web UI
  - √ Time line
+ - √ Sentry integration
  - _ Multiple Trac
  - _ Trac module to live index
  - _ Redmine variant
+ - _ Blood hound integration
 
 Licence
 -------
