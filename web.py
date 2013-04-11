@@ -37,7 +37,8 @@ def components(filename):
 @app.route("/", methods=['GET'])
 def index():
     q = request.args.get('q', '')
-    facets = ['status', 'reporter', 'owner', 'priority', 'cc', 'keywords', 'component', '_type', 'author']
+    facets = ['status', 'reporter', 'owner', 'priority', 'cc', 'keywords',
+              'component', '_type', 'author', 'path']
     selected = {}
     for facet in facets:
         a = request.args.get('facet_%s' % facet, '')

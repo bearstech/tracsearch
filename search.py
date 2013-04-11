@@ -121,11 +121,14 @@ class TracSearch(Search):
                             'analyzer': 'myHTML'
                         },
                         'name': {
-                            'boost': 1.0,
+                            'boost': 5.0,
                             'store': 'yes',
                             'type': 'string',
                             "term_vector": "with_positions_offsets"
                         },
+                        'path': {
+                            'type': 'string'
+                        }
                     }
                 }
         }
