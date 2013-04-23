@@ -398,6 +398,7 @@ body {
   font-family: "Signika";
   background-color: #af5a2a;
   background-image: linear-gradient(#af5a2a, #401b0c);
+  min-height: 800px;
 }
 #main {
   padding: 0;
@@ -442,6 +443,7 @@ body {
   border-right: thin solid #401b0c;
   border-left: thin solid #401b0c;
   margin-bottom: 20px;
+  min-height: 100%;
 }
 #results .header,
 #results .title {

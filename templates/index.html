@@ -47,8 +47,8 @@
                     {% endif %}
                 </form>
             </div>
-            <div id="results">
                 {% if results %}
+            <div id="results">
                 {% for result in results.hits.hits %}
                 <div class="response">
                     {% if result._type == 'ticket' %}
@@ -91,8 +91,8 @@
 
                 {% endfor %}
 
-                {% endif %}
             </div>
+                {% endif %}
         </div>
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="/static/d3.v3.min.js"></script>
