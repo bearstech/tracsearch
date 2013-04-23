@@ -80,6 +80,11 @@ class TracSearch(Search):
                             'store': 'yes',
                             "term_vector": "with_positions_offsets"
                             },
+                        'url': {
+                            'type': 'string',
+                            'store': 'yes',
+                            'index': 'no'
+                            },
                         'summary': {
                             'boost': 2.0,
                             'type': 'string',
@@ -128,7 +133,12 @@ class TracSearch(Search):
                         },
                         'path': {
                             'type': 'string'
-                        }
+                        },
+                        'url': {
+                            'type': 'string',
+                            'store': 'yes',
+                            'index': 'no'
+                            },
                     }
                 }
         }

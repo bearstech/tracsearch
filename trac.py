@@ -2,6 +2,21 @@ from urlparse import urlparse
 from xml.parsers.expat import ExpatError
 import xmlrpclib
 import datetime
+from StringIO import StringIO
+
+
+def unCamel(txt):
+    "Split cameled word."
+    txt = unicode(txt)
+    r = StringIO()
+    first = True
+    for l in range(len(txt) - 1):
+        if not first and txt[l].isupper() and txt[l + 1].islower():
+            r.write(u" ")
+        r.write(txt[l])
+        first = False
+    r.write(txt[-1])
+    return r.getvalue()
 
 
 class Trac(object):
@@ -11,6 +26,7 @@ class Trac(object):
         p = urlparse(uri)
         self.web = "%s://%s" % (p.scheme, p.hostname)
         self.trac = xmlrpclib.ServerProxy(uri)
+        self.hostname = p.hostname
 
     def wiki(self):
         for page in self.trac.wiki.getAllPages():
@@ -20,11 +36,20 @@ class Trac(object):
             except:
                 body = ''
                 print "Oups sur la page %s" % info['name']
-            data = {'name': info['name'],
+            path = info['name'].split('/')
+            data = {'id': info['name'],
+                    'name': u" / ".join([unCamel(w) for w in path]),
                     'author': info['author'],
                     'version': info['version'],
                     'lastModified': info['lastModified'].value,
-                    'body': body}
+                    'body': body,
+                    'domain': self.hostname,
+                    'url': "%s/track/wiki/%s" % (self.web, info['name'])
+                    }
+            if len(path) > 1:
+                data['path'] = []
+                for a in range(1, len(path)):
+                    data['path'].append('/'.join(path[:a]))
             yield data
 
     def ticket(self, since):
@@ -39,6 +64,8 @@ class Trac(object):
                 for k in ['time', 'changetime']:
                     attributes[k] = attributes[k].value
                 attributes['id'] = str(attributes['id'])
+                attributes['domain'] = self.hostname
+                attributes['url'] = "%s/track/ticket/%s" % (self.web, attributes['id'])
                 comments = []
                 for time, author, field, oldvalue, newvalue, permanent in self.trac.ticket.changeLog(t):
                     if field == 'comment':

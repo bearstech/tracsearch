@@ -1,22 +1,17 @@
-from ConfigParser import ConfigParser
-
 from flask import Flask, render_template, request
 from flask.helpers import send_from_directory
 from jinja2 import escape
 from pyelasticsearch import ElasticSearch
 
-from trac import Trac
+from config import config
 
 
-config = ConfigParser()
-config.read(['tracsearch.ini'])
 app = Flask(__name__)
 if config.has_section('sentry'):
     from raven.contrib.flask import Sentry
     sentry = Sentry(app, dsn=config.get('sentry', 'dsn'))
 
 es = ElasticSearch(config.get('elasticsearch', 'url', 'http://127.0.0.1:9200/'))
-trac = Trac(config.get('trac', 'url', 'http://robert:password@127.0.0.1/trac'))
 
 
 @app.template_filter('nicedate')
@@ -38,7 +33,7 @@ def components(filename):
 def index():
     q = request.args.get('q', '')
     facets = ['status', 'reporter', 'owner', 'priority', 'cc', 'keywords',
-              'component', '_type', 'author', 'path']
+              'component', '_type', 'author', 'path', 'domain']
     selected = {}
     for facet in facets:
         a = request.args.get('facet_%s' % facet, '')
@@ -91,9 +86,7 @@ def index():
             query['filter'] = {'term': selected}
             query['facets']['changetime']['facet_filter'] = {'term': selected}
 
-        context = dict(q=q,
-                       trac_root=trac.web,
-                       facets=selected)
+        context = dict(q=q, facets=selected)
         start = request.args.get('start', '')
         end = request.args.get('end', '')
         if end != '':

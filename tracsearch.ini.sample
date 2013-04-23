@@ -2,12 +2,10 @@
 url=http://127.0.0.1:9200
 bulk_size=50
 
-[trac]
+[trac:toto]
 url=https://robert:p455w0rd@trac.toto.com
+ticket_timedelta=30
 
 [web]
 host=127.0.0.1
 debug=1
-
-[index:ticket]
-timedelta=30
