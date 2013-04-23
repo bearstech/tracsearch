@@ -1,3 +1,3 @@
 style:
-	lessc --include-path=components less/styles.less static/styles.css
+	lessc --include-path=components less/styles-blue.less static/styles.css
 

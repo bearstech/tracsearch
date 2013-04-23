@@ -394,11 +394,10 @@ h6 {
  * Extend this object into your markup.
  *
  */
-/*Rose and rows, from Kuler*/
 body {
   font-family: "Signika";
-  background-color: #d4623f;
-  background-image: linear-gradient(#d4623f, #d97354);
+  background-color: #af5a2a;
+  background-image: linear-gradient(#af5a2a, #401b0c);
 }
 #main {
   padding: 0;
@@ -407,39 +406,41 @@ body {
   min-height: 500px;
 }
 #search {
-  background-color: #b53e2e;
-  background-image: linear-gradient(#8c3024, #b53e2e, #c94533);
-  color: #ff9d4d;
+  background-color: #2a4959;
+  background-image: linear-gradient(40deg, #3a657c, #2a4959);
+  color: #b3ccb7;
   box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.7);
   padding: 5px;
   margin: 0;
   position: relative;
   z-index: 2;
   min-height: 100px;
+  border: thin solid #2a4959;
 }
 #search input {
   font-size: 150%;
-  background-color: #ded59f;
-  border: thin #3d2d29 solid;
-  color: #3d2d29;
+  background-color: #b3ccb7;
+  border: thin #401b0c solid;
+  color: #401b0c;
   width: 580px;
   padding-left: 10px;
 }
 #search button.search {
   font-size: 150%;
-  color: #b53e2e;
-  background-color: #ff9d4d;
-  background-image: linear-gradient(#ffd5b3, #ff9d4d);
+  color: white;
+  background-color: #76a5a8;
+  background-image: linear-gradient(#95b9bc, #76a5a8);
   border: none;
   float: left;
   margin-right: 5px;
   margin-top: 1px;
 }
 #results {
-  background-color: #c4b453;
-  border: thin solid #b53e2e;
+  background-color: #76a5a8;
   z-index: 1;
   padding: 20px 3px 3px 3px;
+  border-right: thin solid #401b0c;
+  border-left: thin solid #401b0c;
   margin-bottom: 20px;
 }
 #results .header,
@@ -449,7 +450,7 @@ body {
   line-height: 85%;
 }
 #results .title {
-  font-weight: bold;
+  font-weight: bolder;
 }
 #score {
   font-size: 300%;
@@ -471,15 +472,14 @@ body {
   z-index: 3;
   margin-right: -30px;
   border-radius: 50px;
-  background-color: #ff9d4d;
-  color: #d4623f;
+  background-color: #76a5a8;
   padding: 0 20px 0 20px;
   box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.3);
   height: 100px;
   text-align: center;
 }
 h1 {
-  color: rgba(255, 157, 77, 0.5);
+  color: rgba(255, 255, 255, 0.09999999999999998);
   display: block;
   transform: rotate(-90deg) translate(-170px, -230px);
   -webkit-transform: rotate(-90deg) translate(-170px, -230px);
@@ -488,7 +488,7 @@ h1 {
 }
 a {
   text-decoration: none;
-  color: #3d2d29;
+  color: #401b0c;
 }
 div.facet {
   font-size: 65%;
@@ -497,13 +497,13 @@ div.facet {
 button.facet {
   padding: 2px;
   margin: 1px;
-  border: thin #5e5520 solid;
-  background-color: #c4b453;
-  color: #3d2d29;
+  border: thin #401b0c solid;
+  background-color: #e5d8b5;
+  color: #401b0c;
 }
 .facet.selected {
-  color: #c4b453;
-  border: thin #c4b453 solid;
+  color: #b3ccb7;
+  border: thin #b3ccb7 solid;
   background-color: #444444;
 }
 .facet .count {
@@ -514,40 +514,39 @@ button.facet {
   margin: 0;
   margin-top: -10px;
   padding-top: 2px;
-  background: linear-gradient(#c4b453, #cbbc66);
-  background-image: -webkit-linear-gradient(#c4b453, #cbbc66);
+  background: linear-gradient(#76a5a8, #86afb2);
+  background-image: -webkit-linear-gradient(#76a5a8, #86afb2);
 }
 dl {
   margin-top: 0;
   margin-left: 50px;
 }
 dt {
-  color: #b53e2e;
+  color: #b3ccb7;
   font-size: 65%;
 }
 dd {
-  color: rgba(0, 0, 0, 0.6);
-  font-weight: lighter;
+  color: #401b0c;
 }
 dd b {
-  color: black;
+  color: #401b0c;
   font-weight: bolder;
 }
 .serial {
-  color: #9c232a;
+  color: #b3ccb7;
 }
 .header span {
-  background-color: #d4623f;
+  background-color: #b3ccb7;
   color: white;
   font-size: 65%;
-  padding: 0 2px 0 2px;
+  padding: 1px 4px 1px 4px;
 }
 .chart {
   cursor: col-resize;
 }
 .chart rect {
-  fill: #ff9d4d;
-  stroke: #3d2d29;
+  fill: #e5d8b5;
+  stroke: #401b0c;
 }
 .chart #selection {
   fill: white;
@@ -560,10 +559,10 @@ dd b {
   font-size: 65%;
 }
 #datetime line {
-  stroke: #3d2d29;
+  stroke: #401b0c;
 }
 #datetime button {
   margin-left: 5px;
-  border: thin solid #3d2d29;
+  border: thin solid #401b0c;
   background-cursor: #e5d8b5;
 }
