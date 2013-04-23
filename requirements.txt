@@ -2,3 +2,4 @@ flask
 pyelasticsearch==0.4
 raven
 blinker
+requests
