@@ -44,7 +44,7 @@ class Trac(object):
                     'lastModified': info['lastModified'].value,
                     'body': body,
                     'domain': self.hostname,
-                    'url': "%s/track/wiki/%s" % (self.web, info['name'])
+                    'url': "%s/trac/wiki/%s" % (self.web, info['name'])
                     }
             if len(path) > 1:
                 data['path'] = []
@@ -65,7 +65,7 @@ class Trac(object):
                     attributes[k] = attributes[k].value
                 attributes['id'] = str(attributes['id'])
                 attributes['domain'] = self.hostname
-                attributes['url'] = "%s/track/ticket/%s" % (self.web, attributes['id'])
+                attributes['url'] = "%s/trac/ticket/%s" % (self.web, attributes['id'])
                 comments = []
                 for time, author, field, oldvalue, newvalue, permanent in self.trac.ticket.changeLog(t):
                     if field == 'comment':
