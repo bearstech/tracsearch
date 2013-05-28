@@ -28,14 +28,17 @@ $(function() {
     var format = d3.time.format('%Y-%m-%d');
     var w = width / values.length,
         h = 30;
-    var x = d3.scale.linear()
-        .domain([values[0].time, values[values.length - 1].time])
+    var x = d3.time.scale().domain(
+                [new Date(values[0].time),
+                new Date(values[values.length - 1].time)])
         .range([0, width]);
     var y = d3.scale.linear()
         .domain([0, max])
         .rangeRound([0, h]);
 
     var chart = d3.select('#datetime svg');
+    var axis = d3.svg.axis();
+    axis.scale(x).orient('bottom').tickSubdivide(true).tickSize(6, 3, 0);
     var zoom = d3.behavior.zoom();
     zoom.on('zoom', function() {
         console.log(this, arguments);
@@ -64,8 +67,8 @@ $(function() {
     drag.on('dragend', function() {
         var c = $('#datetime svg').offset();
         var dragend = d3.event.sourceEvent.clientX - c.left;
-        var start = x.invert(dragorigin);
-        var end = x.invert(dragend);
+        var start = x.invert(dragorigin).getTime();
+        var end = x.invert(dragend).getTime();
         console.log(format(new Date(start)), format(new Date(end)));
         $('input[name="start"]').val(start);
         $('input[name="end"]').val(end);
@@ -100,4 +103,5 @@ $(function() {
         .attr('x2', w * values.length)
         .attr('y1', h - .5)
         .attr('y2', h - .5);
+    chart.append('g').attr('transform', 'translate(0, 30)').call(axis);
 });

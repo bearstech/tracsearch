@@ -443,7 +443,6 @@ body {
   border-right: thin solid #401b0c;
   border-left: thin solid #401b0c;
   margin-bottom: 20px;
-  min-height: 100%;
 }
 #results .header,
 #results .title {
@@ -555,6 +554,10 @@ dd b {
   fill-opacity: 0.2;
   stroke: none;
   cursor: move;
+}
+.chart .tick text {
+  font-size: 8pt;
+  fill: #b3ccb7;
 }
 #info {
   min-height: 20px;
