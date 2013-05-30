@@ -13,6 +13,7 @@ Install it
 Create a nice virtualenv.
 
     pip install -r requirements.txt
+    python setup.py install
 
 Try it
 ------
@@ -26,11 +27,11 @@ Configure
 
 Index some tickets
 
-    ./index_ticket.py
+    index_ticket.py
 
 Launch the web application
 
-    python web.py
+    python -m tracsearch.web
 
 Deploy it
 ---------

@@ -2,9 +2,9 @@
 
 import datetime
 
-from config import config
-from trac import Trac
-from search import TracSearch, datetimeformat
+from tracsearch.config import config
+from tracsearch.trac import Trac
+from tracsearch.search import TracSearch, datetimeformat
 
 
 search = TracSearch(
