@@ -6,7 +6,8 @@ from pyelasticsearch import ElasticSearch
 from config import config
 
 
-app = Flask(__name__)
+app = Flask('tracsearch', instance_relative_config=True)
+app.root_path = '.'
 if config.has_section('sentry'):
     from raven.contrib.flask import Sentry
     sentry = Sentry(app, dsn=config.get('sentry', 'dsn'))
@@ -73,7 +74,7 @@ def index():
                     'name': {}
                 }
             },
-            'filter': {}
+            'filter': {},
         }
         for facet in facets:
             query['facets'][facet] = {
