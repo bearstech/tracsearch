@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+
+"""Trac Search
+
+Usage:
+    tracsearch delete
+    tracsearch ticket
+    tracsearch wiki
+    tracsearch web
+
+Option:
+    --config Config file.
+"""
+import datetime
+
+from tracsearch.config import config
+from tracsearch.trac import Trac
+from tracsearch.search import TracSearch, datetimeformat
+from tracsearch.web import app
+
+
+search = TracSearch(
+    config.get('elasticsearch', 'url', 'http://127.0.0.1:9200'),
+    bulk_size=config.getint('elasticsearch', 'bulk_size')
+)
+if __name__ == '__main__':
+    from docopt import docopt
+
+    arguments = docopt(__doc__, version='Trac search 0.5')
+
+    if arguments['delete']:
+        search.recreate()
+    elif arguments['ticket']:
+        for t in config.tracs():
+            trac = Trac(config.get(t, 'url', None))
+
+            period = datetime.timedelta(config.getint(t, 'ticket_timedelta'))
+
+            for ticket, comments in trac.ticket(period):
+                print ticket['summary']
+                ticket['comment'] = []
+                ticket['changetime'] = datetimeformat(ticket['changetime'])
+                n = 0
+                for comment in comments:
+                    comment['id'] = "%s_%i" % (ticket['id'], n)
+                    ticket['comment'].append(comment)
+                    n += 1
+                search.index('ticket', ticket, bulk=True)
+
+            search.flush_bulk('ticket')
+    elif arguments['wiki']:
+        for t in config.tracs():
+            trac = Trac(config.get(t, 'url', None))
+
+            for wiki in trac.wiki():
+                print wiki['name']
+                wiki['changetime'] = datetimeformat(wiki['lastModified'])
+                search.index('wiki', wiki, bulk=True)
+
+            search.flush_bulk('wiki')
+    elif arguments['web']:
+        app.run(config.get('web', 'host', '127.0.0.1'))

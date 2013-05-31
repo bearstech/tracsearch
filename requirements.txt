@@ -3,3 +3,4 @@ pyelasticsearch==0.5
 raven
 blinker
 requests
+docopt

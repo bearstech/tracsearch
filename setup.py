@@ -7,13 +7,12 @@ setup(name='tracsearch',
       author_email='mlecarme@bearstech.com',
       license='BSD',
       packages=['tracsearch'],
-      scripts=['scripts/index_clean.py',
-               'scripts/index_ticket.py',
-               'scripts/index_wiki.py'],
+      scripts=['scripts/tracsearch'],
       requires=['flask',
                 'pyelasticsearch(==0.5)',
                 'raven',
                 'blinker',
-                'requests'
-          ]
+                'requests',
+                'docopt'
+                ]
       )
