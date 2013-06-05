@@ -15,6 +15,8 @@ Create a nice virtualenv.
     pip install -r requirements.txt
     python setup.py install
 
+The command line application is named _tracsearch_.
+
 Try it
 ------
 
@@ -27,11 +29,11 @@ Configure
 
 Index some tickets
 
-    index_ticket.py
+    tracsearch ticket
 
 Launch the web application
 
-    python -m tracsearch.web
+    tracsearch web
 
 Deploy it
 ---------
@@ -44,11 +46,13 @@ Use supervisord to launch the web application.
 
 Use the source folder as virtualenv folder.
 
+    pip install gunicorn
+
 Edit _/etc/supervisor/conf.d/tracsearch.conf_
 
     [program:tracsearch]
     user=tracsearch
-    command=/opt/tracsearch/bin/python web.py
+    command=/opt/tracsearch/bin/gunicorn -b 127.0.0.1:5000 -w 4 tracsearch.web:app
     directory=/opt/tracsearch
     environment=PATH="/opt/tracsearch/bin"
 
@@ -72,7 +76,9 @@ Todo
  - √ Web UI
  - √ Time line
  - √ Sentry integration
- - _ Multiple Trac
+ - √ Multiple Trac
+ - _ Plugins
+ - _ Angular UI
  - _ Trac module to live index
  - _ Redmine variant
  - _ Blood hound integration
