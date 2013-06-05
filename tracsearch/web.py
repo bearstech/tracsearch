@@ -3,17 +3,19 @@ from flask.helpers import send_from_directory
 from jinja2 import escape
 from pyelasticsearch import ElasticSearch
 
-def run(config):
 
-    app = Flask('tracsearch', instance_relative_config=True)
-    app.root_path = '.'
+
+def run(config, run=True):
+
+    appli = Flask('tracsearch', instance_relative_config=True)
+    appli.root_path = '.'
     if config.has_section('sentry'):
         from raven.contrib.flask import Sentry
-        sentry = Sentry(app, dsn=config.get('sentry', 'dsn'))
+        sentry = Sentry(appli, dsn=config.get('sentry', 'dsn'))
 
     es = ElasticSearch(config.get('elasticsearch', 'url', 'http://127.0.0.1:9200/'))
 
-    @app.template_filter('nicedate')
+    @appli.template_filter('nicedate')
     def nicedate(value):
         value = escape(value)
         year = value[0:4]
@@ -22,11 +24,11 @@ def run(config):
         time = value[9:17]
         return "%s-%s-%s %s" % (year, month, day, time)
 
-    @app.route("/components/<path:filename>")
+    @appli.route("/components/<path:filename>")
     def components(filename):
         return send_from_directory("components", filename)
 
-    @app.route("/", methods=['GET'])
+    @appli.route("/", methods=['GET'])
     def index():
         q = request.args.get('q', '')
         size = 20
@@ -109,5 +111,23 @@ def run(config):
             context['results'] = results
         return render_template('index.html', **context)
 
-    app.debug = config.get('web', 'debug', False)
-    app.run(config.get('web', 'host', '127.0.0.1'))
+    appli.debug = config.get('web', 'debug', False)
+    if run:
+        appli.run(config.get('web', 'host', '127.0.0.1'))
+    else:
+        return appli
+
+_app = None
+
+
+def app(environ, start_response):
+    import os
+    from tracsearch.config import config
+    global _app
+    if _app is None:
+        conf = os.getenv('TRACSEARCH_CONF')
+        if conf is None:
+            conf = "tracsearch.ini"
+        config.read([conf])
+        _app = run(config, run=False)
+    return _app(environ, start_response)
