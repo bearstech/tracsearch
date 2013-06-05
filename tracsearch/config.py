@@ -19,4 +19,3 @@ class Config(SafeConfigParser):
 
 
 config = Config()
-config.read(['tracsearch.ini'])
