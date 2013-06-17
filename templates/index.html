@@ -92,8 +92,13 @@
 
                 {% endfor %}
 
+            {% if results.hits.total > size %}
+            <div id="paginate">
+                <a href="?{{next}}">&gt;</a>
             </div>
-                {% endif %}
+            {% endif %}
+            </div>
+            {% endif %}
         </div>
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="/static/d3.v3.min.js"></script>

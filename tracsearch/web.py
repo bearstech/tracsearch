@@ -1,3 +1,4 @@
+import urllib
 from flask import Flask, render_template, request
 from flask.helpers import send_from_directory
 from jinja2 import escape
@@ -103,6 +104,10 @@ def run(config, run=True):
                 context['start'] = start
                 context['end'] = end
 
+            tmp = request.args.copy()
+            tmp['from'] = int(request.args.get('from', 0)) + 1
+
+            context['next'] = urllib.urlencode(tmp)
             print query
             context['from'] = from_
             context['size'] = size
