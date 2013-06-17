@@ -50,6 +50,7 @@
             </div>
                 {% if results %}
             <div id="results">
+                <a name="results"></a>
                 {% for result in results.hits.hits %}
                 <div class="response">
                     {% if result._type == 'ticket' %}
@@ -92,9 +93,14 @@
 
                 {% endfor %}
 
-            {% if results.hits.total > size %}
+            {% if results.hits.total > size * (from + 1) %}
             <div id="paginate">
-                <a href="?{{next}}">&gt;</a>
+                {% if from > 0 %}
+                    <a href="?{{first}}#results">&lt;&lt;</a>
+                    <a href="?{{previous}}#results">&lt;</a>
+                {% endif %}
+
+                {{size * from + 1}}…{{size * (from + 1)}} / {{results.hits.total}} <a href="?{{next}}#results">&gt;</a>
             </div>
             {% endif %}
             </div>

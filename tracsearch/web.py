@@ -106,13 +106,16 @@ def run(config, run=True):
 
             tmp = request.args.copy()
             tmp['from'] = int(request.args.get('from', 0)) + 1
-
             context['next'] = urllib.urlencode(tmp)
+            tmp['from'] = tmp['from'] - 2
+            context['previous'] = urllib.urlencode(tmp)
+            tmp['from'] = 0
+            context['first'] = urllib.urlencode(tmp)
             print query
             context['from'] = from_
             context['size'] = size
             results = es.search(query, index='trac')
-            print results['hits'].keys()
+            print results.keys()
             context['results'] = results
         return render_template('index.html', **context)
 
