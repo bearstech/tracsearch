@@ -479,6 +479,9 @@ body {
   height: 100px;
   text-align: center;
 }
+#paginate {
+  text-align: center;
+}
 h1 {
   color: rgba(255, 255, 255, 0.09999999999999998);
   display: block;
