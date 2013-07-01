@@ -1,4 +1,5 @@
 $(function() {
+    $('#q').focus();
     $('button.facet').click(function(evt) {
         var sel = 'input[name="facet_' + this.dataset.facet + '"]';
         if ($(this).hasClass('selected')) {

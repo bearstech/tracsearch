@@ -12,7 +12,7 @@
             <div id="search">
                 <h1 class="mega">Trac Search</h1>
                 <form action="/" method="GET">
-                    <input type="text" name="q" value="{{q}}"/>
+                    <input type="text" id="q" name="q" value="{{q}}"/>
                     <button class="search">Search</button>
                 {% if results %}
                 <div id="result"><div id="score">{{ results.hits.total }}</div><div id="time">{{ results.took }} ms</div></div>
