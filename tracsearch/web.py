@@ -106,11 +106,11 @@ def run(config, run=True):
 
             tmp = request.args.copy()
             tmp['from'] = int(request.args.get('from', 0)) + 1
-            context['next'] = urllib.urlencode(tmp)
+            context['next'] = urllib.urlencode(encode_dict(tmp))
             tmp['from'] = tmp['from'] - 2
-            context['previous'] = urllib.urlencode(tmp)
+            context['previous'] = urllib.urlencode(encode_dict(tmp))
             tmp['from'] = 0
-            context['first'] = urllib.urlencode(tmp)
+            context['first'] = urllib.urlencode(encode_dict(tmp))
             print query
             context['from'] = from_
             context['size'] = size
@@ -124,6 +124,12 @@ def run(config, run=True):
         appli.run(config.get('web', 'host', '127.0.0.1'))
     else:
         return appli
+
+
+# http://stackoverflow.com/questions/6480723/urllib-urlencode-doesnt-like-unicode-values-how-about-this-workaround
+def encode_dict(map):
+    return dict([(key, val.encode('utf-8')) for key, val in map.items()
+                 if isinstance(val, basestring)])
 
 _app = None
 
