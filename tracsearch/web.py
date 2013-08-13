@@ -34,8 +34,8 @@ def run(config, run=True):
         q = request.args.get('q', '')
         size = 20
         from_ = int(request.args.get('from', 0))
-        facets = ['status', 'reporter', 'owner', 'priority', 'cc', 'keywords',
-                'component', '_type', 'author', 'path', 'domain']
+        facets = ['status', 'user', 'priority', 'keywords',
+                'component', '_type', 'path', 'domain']
         selected = {}
         for facet in facets:
             a = request.args.get('facet_%s' % facet, '')

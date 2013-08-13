@@ -42,7 +42,7 @@ elif arguments['ticket']:
         period = datetime.timedelta(config.getint(t, 'ticket_timedelta'))
 
         for ticket, comments in trac.ticket(period):
-            print ticket['summary']
+            print ticket['title']
             ticket['comment'] = []
             ticket['changetime'] = datetimeformat(ticket['changetime'])
             n = 0

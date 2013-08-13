@@ -38,8 +38,8 @@ class Trac(object):
                 print "Oups sur la page %s" % info['name']
             path = info['name'].split('/')
             data = {'id': info['name'],
-                    'name': u" / ".join([unCamel(w) for w in path]),
-                    'author': info['author'],
+                    'title': u" / ".join([unCamel(w) for w in path]),
+                    'user': info['author'],
                     'version': info['version'],
                     'lastModified': info['lastModified'].value,
                     'body': body,
@@ -69,7 +69,14 @@ class Trac(object):
                 comments = []
                 for time, author, field, oldvalue, newvalue, permanent in self.trac.ticket.changeLog(t):
                     if field == 'comment':
-                        comments.append({'author': author, 'time': time.value, 'comment': newvalue})
+                        comments.append({'user': author, 'time': time.value, 'comment': newvalue})
+                attributes['user'] = set()
+                attributes['user'].add(attributes['owner'])
+                for cc in attributes['cc']:
+                    if cc:
+                        attributes['user'].add(cc)
+                attributes['title'] = attributes['summary']
+                del attributes['summary']
                 yield attributes, comments
             except ExpatError:  # xml trouble
                 print "Crash while fetching %s" % t

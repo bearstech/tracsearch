@@ -57,7 +57,7 @@
                     {% if result._type == 'ticket' %}
                     <div class="title">
                         <span class="serial">#{{result._id}}</span>
-                        <a href="{{result._source.url}}" class="title">{{ result._source.summary}}</a>
+                        <a href="{{result._source.url}}" class="title">{{ result._source.title}}</a>
                     </div>
                     <div class="header">
                         <span>Ticket</span>
@@ -76,7 +76,7 @@
                     {% endif %}
                     {% if result._type == 'wiki' %}
                     <div class="title">
-                        <a href="{{result._source.url}}">{{result._source.name}}</a>
+                        <a href="{{result._source.url}}">{{result._source.title}}</a>
                     </div>
                     <div class="header">
                         <span>Wiki</span>
