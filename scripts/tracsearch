@@ -58,7 +58,7 @@ elif arguments['wiki']:
         trac = Trac(config.get(t, 'url', None))
 
         for wiki in trac.wiki():
-            print wiki['name']
+            print wiki['title']
             wiki['changetime'] = datetimeformat(wiki['lastModified'])
             search.index('wiki', wiki, bulk=True)
 
