@@ -9,3 +9,6 @@ ticket_timedelta=30
 [web]
 host=127.0.0.1
 debug=1
+
+[statsd]
+host=127.0.0.1

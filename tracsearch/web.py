@@ -14,6 +14,12 @@ def run(config, run=True):
         from raven.contrib.flask import Sentry
         sentry = Sentry(appli, dsn=config.get('sentry', 'dsn'))
 
+    if config.has_section('statsd'):
+        from statsd import StatsClient
+        stats = StatsClient(config.get('statsd', 'host'), 8125, prefix='tracsearch')
+    else:
+        stats = None
+
     es = ElasticSearch(config.get('elasticsearch', 'url', 'http://127.0.0.1:9200/'))
 
     @appli.template_filter('nicedate')
@@ -115,6 +121,9 @@ def run(config, run=True):
             context['from'] = from_
             context['size'] = size
             results = es.search(query, index='trac')
+            if stats:
+                stats.incr('query')
+                stats.timing('query', results['took'])
             print results.keys()
             context['results'] = results
         return render_template('index.html', **context)

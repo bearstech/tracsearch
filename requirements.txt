@@ -4,3 +4,4 @@ raven
 blinker
 requests
 docopt
+statsd
