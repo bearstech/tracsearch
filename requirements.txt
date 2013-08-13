@@ -1,5 +1,5 @@
 flask
-pyelasticsearch==0.5
+pyelasticsearch==0.6
 raven
 blinker
 requests
