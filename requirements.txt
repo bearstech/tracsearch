@@ -1,5 +1,6 @@
 flask
 pyelasticsearch==0.6.1
+elasticsearch
 raven>=3.5
 blinker
 requests

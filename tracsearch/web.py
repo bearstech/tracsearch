@@ -1,9 +1,13 @@
 import urllib
+import logging
 from flask import Flask, render_template, request
 from flask.helpers import send_from_directory
 from jinja2 import escape
-from pyelasticsearch import ElasticSearch
 
+logger = logging.getLogger('elasticsearch')
+logger.addHandler(logging.StreamHandler())
+
+from elasticsearch import Elasticsearch
 
 
 def run(config, run=True):
@@ -20,7 +24,8 @@ def run(config, run=True):
     else:
         stats = None
 
-    es = ElasticSearch(config.get('elasticsearch', 'url', 'http://127.0.0.1:9200/'))
+    es = Elasticsearch(hosts=config.get('elasticsearch', 'url', '127.0.0.1:9200'))
+
 
     @appli.template_filter('nicedate')
     def nicedate(value):
@@ -41,7 +46,7 @@ def run(config, run=True):
         size = 20
         from_ = int(request.args.get('from', 0))
         facets = ['status', 'user', 'priority', 'keywords',
-                'component', '_type', 'path', 'domain']
+                  'component', '_type', 'path', 'domain']
         selected = {}
         for facet in facets:
             a = request.args.get('facet_%s' % facet, '')
@@ -58,11 +63,6 @@ def run(config, run=True):
                         'default_operator': 'AND'
                     }
                 },
-                'sort': [
-                    {'changetime': 'desc'}
-                ],
-                'from': from_,
-                'size': size,
                 'facets': {
                     'changetime': {
                         'date_histogram': {
@@ -94,7 +94,8 @@ def run(config, run=True):
 
             if selected != {}:
                 query['filter'] = {'term': selected}
-                query['facets']['changetime']['facet_filter'] = {'term': selected}
+                query['facets']['changetime']['facet_filter'] = {'term':
+                                                                 selected}
 
             context = dict(q=q, facets=selected)
             start = request.args.get('start', '')
@@ -106,7 +107,8 @@ def run(config, run=True):
                 }
                 }
                 query['filter']['range'] = filter_
-                query['facets']['changetime']['facet_filter'] = {'range': filter_}
+                query['facets']['changetime']['facet_filter'] = {'range':
+                                                                 filter_}
                 context['start'] = start
                 context['end'] = end
 
@@ -120,11 +122,14 @@ def run(config, run=True):
             print query
             context['from'] = from_
             context['size'] = size
-            results = es.search(query, index='trac')
+            results = es.search(
+                index='trac', size=size, body=query
+            )
             if stats:
                 stats.incr('query')
                 stats.timing('query', results['took'])
             print results.keys()
+            print results['hits']
             context['results'] = results
         return render_template('index.html', **context)
 
