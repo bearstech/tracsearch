@@ -1,3 +1,4 @@
+# FIXME use elasticsearch, not pyelasticsearch
 from pyelasticsearch import ElasticSearch
 from pyelasticsearch.exceptions import ElasticHttpNotFoundError
 
@@ -10,7 +11,7 @@ def datetimeformat(raw):
 class Search(object):
     def __init__(self, index,  url, bulk_size=100, settings=None):
         self._index = index
-        self.es = ElasticSearch(url)
+        self.es = ElasticSearch("http://%s" % url)
         self._bulk = {}
         self.bulk_size = bulk_size
         self._settings = settings
