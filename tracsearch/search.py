@@ -53,7 +53,7 @@ class TracSearch(object):
     def __init__(self, es):
         assert es.ping()
         self.es = es
-        self.types=dict(
+        self.types = dict(
             ticket = {
                 'ticket': {
                     '_all': {
@@ -129,7 +129,7 @@ class TracSearch(object):
             }
         )
 
-    def indices(self):
+    def prepare_indices(self):
         settings = {
             'analysis': {
                 'analyzer': {
@@ -153,6 +153,11 @@ class TracSearch(object):
             if self.es.indices.exists(indice):
                 self.es.indices.delete(indice)
 
+    def refresh(self):
+        for indice in self.types:
+            if self.es.indices.exists(indice):
+                self.es.indices.refresh(indice)
+
     def index(self, table, values):
         bulk(self.es, _wrap_index(table, values))
 
@@ -161,7 +166,6 @@ def _wrap_index(table, values):
     for value in values:
         value['_index'] = table
         value['_type'] = table
-        value['_action'] = 'put'
         yield value
 
 """
