@@ -100,22 +100,18 @@ class TracSearch(object):
                 }
             }
         }
-        for k, v in self.types.items():
-            if not self.es.indices.exists(k):
-                self.es.indices.create(index=k, body={
-                    'mappings': v,
-                    'settings': settings}
-                )
+        if not self.es.indices.exists('trac'):
+            self.es.indices.create(index='trac', body={
+                'mappings': self.types,
+                'settings': settings}
+            )
 
     def purge(self):
-        for indice in self.types:
-            if self.es.indices.exists(indice):
-                self.es.indices.delete(indice)
+        if self.es.indices.exists('trac'):
+            self.es.indices.delete('trac')
 
     def refresh(self):
-        for indice in self.types:
-            if self.es.indices.exists(indice):
-                self.es.indices.refresh(indice)
+        self.es.indices.refresh('trac')
 
     def index(self, table, values):
         bulk(self.es, _wrap_index(table, values))
