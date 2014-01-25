@@ -123,6 +123,6 @@ class TracSearch(object):
 
 def _wrap_index(table, values):
     for value in values:
-        value['_index'] = table
+        value['_index'] = 'trac'
         value['_type'] = table
         yield value
