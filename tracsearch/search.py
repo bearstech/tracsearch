@@ -116,6 +116,68 @@ class TracSearch(object):
     def index(self, table, values):
         bulk(self.es, _wrap_index(table, values))
 
+    def search(self, q, size=20, from_=0, start='', end='', selected=None):
+        if selected is None:
+            selected = {}
+        facets = ['status', 'user', 'priority', 'keywords',
+                  'component', '_type', 'path', 'domain']
+        # http://www.elasticsearch.org/guide/reference/query-dsl/query-string-query.html
+        query = {
+            'query': {
+                'query_string': {
+                    'query': q,
+                    'default_operator': 'AND'
+                }
+            },
+            'facets': {
+                'changetime': {
+                    'date_histogram': {
+                        'field': 'changetime',
+                        'interval': 'week'
+                    }
+                }
+            },
+            'highlight': {
+                "pre_tags": ["<b>"],
+                "post_tags": ["</b>"],
+                'fields': {
+                    '_all': {},
+                    'comment.comment': {},
+                    'description': {},
+                    'summary': {},
+                    'body': {},
+                    'name': {}
+                }
+            },
+            'filter': {},
+        }
+        for facet in facets:
+            query['facets'][facet] = {
+                'terms': {'field': facet}
+            }
+            if selected != {}:
+                query['facets'][facet]['facet_filter'] = {'term': selected}
+
+        if selected != {}:
+            query['filter'] = {'term': selected}
+            query['facets']['changetime']['facet_filter'] = {'term':
+                                                                selected}
+
+        if end != '':
+            filter_ = {'changetime': {
+                'from': int(start),
+                'to': int(end)
+            }
+            }
+            query['filter']['range'] = filter_
+            query['facets']['changetime']['facet_filter'] = {'range':
+                                                                filter_}
+            context['start'] = start
+            context['end'] = end
+        results = self.es.search(
+            index='trac', size=size, from_=from_, body=query
+        )
+        return results
 
 def _wrap_index(table, values):
     for value in values:
