@@ -1,14 +1,18 @@
 from unittest import TestCase
 
+from elasticsearch import Elasticsearch
+
 from tracsearch.search import TracSearch
 
 
 class SearchTest(TestCase):
 
     def setUp(self):
-        self.trac = TracSearch('localhost:9200')
-        self.trac.recreate()
+        es = Elasticsearch()
+        self.trac = TracSearch(es)
+        self.trac.purge()
+        self.trac.indices()
 
     def test_dummy(self):
-        self.trac.index('ticket', {'plop': 42})
+        self.trac.index('ticket', [{'plop': 42}])
 
