@@ -10,6 +10,7 @@ class SearchTest(TestCase):
     def setUp(self):
         es = Elasticsearch()
         self.trac = TracSearch(es)
+        assert self.trac.ping()
         self.trac.purge()
         self.trac.prepare_indices()
 

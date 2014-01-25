@@ -10,7 +10,6 @@ def datetimeformat(raw):
 
 class TracSearch(object):
     def __init__(self, es):
-        assert es.ping()
         self.es = es
         self.types = dict(
             ticket={
@@ -85,6 +84,9 @@ class TracSearch(object):
                 }
             }
         )
+
+    def ping(self):
+        return self.es.ping()
 
     def prepare_indices(self):
         settings = {
