@@ -161,7 +161,7 @@ class TracSearch(object):
         if selected != {}:
             query['filter'] = {'term': selected}
             query['facets']['changetime']['facet_filter'] = {'term':
-                                                                selected}
+                                                             selected}
 
         if end != '':
             filter_ = {'changetime': {
@@ -171,9 +171,7 @@ class TracSearch(object):
             }
             query['filter']['range'] = filter_
             query['facets']['changetime']['facet_filter'] = {'range':
-                                                                filter_}
-            context['start'] = start
-            context['end'] = end
+                                                             filter_}
         results = self.es.search(
             index='trac', size=size, from_=from_, body=query
         )
