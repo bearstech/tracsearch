@@ -75,6 +75,7 @@ class Trac(object):
                 for cc in attributes['cc']:
                     if cc:
                         attributes['user'].add(cc)
+                attributes['user'] = list(attributes['user'])
                 attributes['title'] = attributes['summary']
                 del attributes['summary']
                 yield attributes, comments
