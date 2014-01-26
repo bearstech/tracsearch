@@ -62,14 +62,16 @@ elif arguments['ticket']:
         search.refresh()
 
 elif arguments['wiki']:
-    for t in config.tracs():
-        trac = Trac(config.get(t, 'url', None))
+    def wiki_factory():
+        for t in config.tracs():
+            trac = Trac(config.get(t, 'url', None))
 
-        for wiki in trac.wiki():
-            print wiki['title']
-            wiki['changetime'] = datetimeformat(wiki['lastModified'])
-            search.index('wiki', wiki, bulk=True)
+            for wiki in trac.wiki():
+                print wiki['title']
+                wiki['changetime'] = datetimeformat(wiki['lastModified'])
+                yield wiki
+    search.index('wiki', wiki_factory())
+    search.refresh()
 
-        search.flush_bulk('wiki')
 elif arguments['web']:
     run(config)
