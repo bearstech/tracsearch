@@ -19,6 +19,7 @@ from tracsearch.config import config
 from tracsearch.trac import Trac
 from tracsearch.search import TracSearch, datetimeformat
 from tracsearch.web import run
+from elasticsearch import Elasticsearch
 
 
 arguments = docopt(__doc__, version='Trac search 0.5')
@@ -29,30 +30,37 @@ else:
     config.read([arguments['--config']])
 
 search = TracSearch(
-    config.get('elasticsearch', 'url', 'http://127.0.0.1:9200'),
-    bulk_size=config.getint('elasticsearch', 'bulk_size')
+    Elasticsearch(config.get('elasticsearch', 'url', '127.0.0.1:9200'))
 )
 
+assert search.ping()
+
 if arguments['delete']:
-    search.recreate()
+    search.purge()
+    search.prepare_indices()
+    search.refresh()
+
 elif arguments['ticket']:
     for t in config.tracs():
         trac = Trac(config.get(t, 'url', None))
 
         period = datetime.timedelta(config.getint(t, 'ticket_timedelta'))
 
-        for ticket, comments in trac.ticket(period):
-            print ticket['title']
-            ticket['comment'] = []
-            ticket['changetime'] = datetimeformat(ticket['changetime'])
-            n = 0
-            for comment in comments:
-                comment['id'] = "%s_%i" % (ticket['id'], n)
-                ticket['comment'].append(comment)
-                n += 1
-            search.index('ticket', ticket, bulk=True)
+        def ticket_factory():
+            for ticket, comments in trac.ticket(period):
+                print ticket['title']
+                ticket['comment'] = []
+                ticket['changetime'] = datetimeformat(ticket['changetime'])
+                n = 0
+                for comment in comments:
+                    comment['id'] = "%s_%i" % (ticket['id'], n)
+                    ticket['comment'].append(comment)
+                    n += 1
+                yield ticket
 
-        search.flush_bulk('ticket')
+        search.index('ticket', ticket_factory())
+        search.refresh()
+
 elif arguments['wiki']:
     for t in config.tracs():
         trac = Trac(config.get(t, 'url', None))
