@@ -113,8 +113,8 @@ class TracSearch(object):
     def refresh(self):
         self.es.indices.refresh('trac')
 
-    def index(self, table, values):
-        bulk(self.es, _wrap_index(table, values))
+    def index(self, type_, values):
+        bulk(self.es, _wrap_index(type_, values))
 
     def search(self, q, size=20, from_=0, start='', end='', selected=None):
         if selected is None:
@@ -179,8 +179,9 @@ class TracSearch(object):
         )
         return results
 
-def _wrap_index(table, values):
+
+def _wrap_index(type_, values):
     for value in values:
         value['_index'] = 'trac'
-        value['_type'] = table
+        value['_type'] = type_
         yield value
