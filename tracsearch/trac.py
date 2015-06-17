@@ -1,5 +1,5 @@
 from urlparse import urlparse
-import time
+from time import sleep
 from xml.parsers.expat import ExpatError
 import xmlrpclib
 import datetime
@@ -57,7 +57,7 @@ class Trac(object):
                     data['path'].append('/'.join(path[:a]))
             cpt += 1
             if cpt % 500 == 0:
-                time.sleep(WAIT_TIME)
+                sleep(WAIT_TIME)
             yield data
 
     def ticket(self, since):
@@ -89,7 +89,7 @@ class Trac(object):
                 del attributes['summary']
                 cpt += 1
                 if cpt % 500 == 0:
-                    time.sleep(WAIT_TIME)
+                    sleep(WAIT_TIME)
                 yield attributes, comments
             except ExpatError:  # xml trouble
                 print "Crash while fetching %s" % t
