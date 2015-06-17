@@ -67,7 +67,10 @@ elif arguments['wiki']:
             trac = Trac(config.get(t, 'url', None))
 
             for wiki in trac.wiki():
-                print wiki['title']
+                try:
+                    print wiki['title']
+                except UnicodeEncodeError:
+                    pass
                 wiki['changetime'] = datetimeformat(wiki['lastModified'])
                 yield wiki
     search.index('wiki', wiki_factory())
