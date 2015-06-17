@@ -48,7 +48,10 @@ elif arguments['ticket']:
 
         def ticket_factory():
             for ticket, comments in trac.ticket(period):
-                print ticket['title']
+                try:
+                    print ticket['title']
+                except UnicodeEncodeError:
+                    pass
                 ticket['comment'] = []
                 ticket['changetime'] = datetimeformat(ticket['changetime'])
                 n = 0
