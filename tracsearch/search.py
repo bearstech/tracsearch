@@ -114,7 +114,7 @@ class TracSearch(object):
         self.es.indices.refresh('trac')
 
     def index(self, type_, values):
-        bulk(self.es, _wrap_index(type_, values))
+        bulk(self.es, _wrap_index(type_, values), chunk_size=500)
 
     def search(self, q, size=20, from_=0, start='', end='', selected=None):
         if selected is None:

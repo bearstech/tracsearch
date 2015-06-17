@@ -1,8 +1,12 @@
 from urlparse import urlparse
+import time
 from xml.parsers.expat import ExpatError
 import xmlrpclib
 import datetime
 from StringIO import StringIO
+
+
+WAIT_TIME = 10
 
 
 def unCamel(txt):
@@ -29,6 +33,7 @@ class Trac(object):
         self.hostname = p.hostname
 
     def wiki(self):
+        cpt = 0
         for page in self.trac.wiki.getAllPages():
             info = self.trac.wiki.getPageInfo(page)
             try:
@@ -50,10 +55,14 @@ class Trac(object):
                 data['path'] = []
                 for a in range(1, len(path)):
                     data['path'].append('/'.join(path[:a]))
+            cpt += 1
+            if cpt % 500 == 0:
+                time.sleep(WAIT_TIME)
             yield data
 
     def ticket(self, since):
         today = datetime.datetime.today()
+        cpt = 0
         for t in self.trac.ticket.getRecentChanges(today - since):
             try:
                 id_, created, changed, attributes = self.trac.ticket.get(t)
@@ -78,6 +87,9 @@ class Trac(object):
                 attributes['user'] = list(attributes['user'])
                 attributes['title'] = attributes['summary']
                 del attributes['summary']
+                cpt += 1
+                if cpt % 500 == 0:
+                    time.sleep(WAIT_TIME)
                 yield attributes, comments
             except ExpatError:  # xml trouble
                 print "Crash while fetching %s" % t
