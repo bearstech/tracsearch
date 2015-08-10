@@ -6,7 +6,7 @@ import datetime
 from StringIO import StringIO
 
 
-WAIT_TIME = 10
+WAIT_TIME = 20
 
 
 def unCamel(txt):
