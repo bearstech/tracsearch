@@ -35,10 +35,10 @@ class TracSearch(object):
                             "term_vector": "with_positions_offsets"
                         }
                     },
-                    'comment': {
-                        'type': 'nested',
-                        'include_in_parent': True
-                    },
+                    #'comment': {
+                        #'type': 'nested',
+                        #'include_in_parent': True
+                    #},
                     'changetime': {
                         'type': 'date',
                         'store': 'yes'
