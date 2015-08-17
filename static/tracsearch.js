@@ -25,7 +25,7 @@ $(function() {
             max = Math.max(max, v);
         }
     });
-    var width = 700;
+    var width = 675;
     var format = d3.time.format('%Y-%m-%d');
     var w = width / values.length,
         h = 30;
@@ -38,8 +38,10 @@ $(function() {
         .rangeRound([0, h]);
 
     var chart = d3.select('#datetime svg');
-    var axis = d3.svg.axis();
-    axis.scale(x).orient('bottom').tickSubdivide(true).tickSize(6, 3, 0);
+    var x_axis = d3.svg.axis();
+    x_axis.scale(x).orient('bottom').tickSubdivide(true).tickSize(6, 3, 0);
+    var y_axis = d3.svg.axis();
+    y_axis.scale(y).orient('right').ticks(3).tickSize(3, 0, 0);
     var zoom = d3.behavior.zoom();
     zoom.on('zoom', function() {
         console.log(this, arguments);
@@ -104,5 +106,7 @@ $(function() {
         .attr('x2', w * values.length)
         .attr('y1', h - .5)
         .attr('y2', h - .5);
-    chart.append('g').attr('transform', 'translate(0, 30)').call(axis);
+    chart.append('g').attr('transform', 'translate(0, 30)')
+        .call(x_axis);
+    chart.append('g').attr('transform', 'translate(685, 0)').call(y_axis);
 });

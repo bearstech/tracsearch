@@ -33,3 +33,4 @@ class SearchTest(TestCase):
         assert res['hits']['total'] == 1
         hits = res['hits']['hits']
         assert len(hits) == 1
+        print res

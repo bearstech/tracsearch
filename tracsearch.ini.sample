@@ -1,5 +1,5 @@
 [elasticsearch]
-url=http://127.0.0.1:9200
+url=127.0.0.1:9200
 bulk_size=50
 
 [trac:toto]
