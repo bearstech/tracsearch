@@ -109,6 +109,8 @@ class TracSearch(object):
     def purge(self):
         if self.es.indices.exists('trac'):
             self.es.indices.delete('trac')
+            for m in ['wiki', 'ticket']:
+                self.es.indices.delete_mapping(m)
 
     def refresh(self):
         self.es.indices.refresh('trac')
