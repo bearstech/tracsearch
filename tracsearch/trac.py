@@ -76,10 +76,9 @@ class Trac(object):
                 attributes['domain'] = self.hostname
                 attributes['url'] = "%s/trac/ticket/%s" % (self.web, attributes['id'])
                 comments = []
-                # FIXME comments are boring
-                #for time, author, field, oldvalue, newvalue, permanent in self.trac.ticket.changeLog(t):
-                    #if field == 'comment':
-                        #comments.append({'user': author, 'time': time.value, 'comment': newvalue})
+                for time, author, field, oldvalue, newvalue, permanent in self.trac.ticket.changeLog(t):
+                    if field == 'comment':
+                        comments.append({'user': author, 'time': time.value, 'comment': newvalue})
                 attributes['user'] = set()
                 attributes['user'].add(attributes['owner'])
                 for cc in attributes['cc']:
