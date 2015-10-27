@@ -61,6 +61,8 @@ class Trac(object):
             yield data
 
     def ticket(self, since):
+        if type(since) == int:
+            since = datetime.timedelta(since)
         today = datetime.datetime.today()
         cpt = 0
         for t in self.trac.ticket.getRecentChanges(today - since):
@@ -93,3 +95,14 @@ class Trac(object):
                 yield attributes, comments
             except ExpatError:  # xml trouble
                 print "Crash while fetching %s" % t
+
+
+if __name__ == "__main__":
+    import sys
+    from pprint import pprint
+
+    t = Trac(sys.argv[1])
+    for ticket in t.ticket(30):
+        print("")
+        pprint(ticket)
+
