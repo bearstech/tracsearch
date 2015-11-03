@@ -183,4 +183,5 @@ def _wrap_index(type_, values):
     for value in values:
         value['_index'] = 'trac'
         value['_type'] = type_
+        value['_id'] = value['id']
         yield value
