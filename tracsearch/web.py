@@ -142,8 +142,8 @@ def run(config, run=True):
 
 # http://stackoverflow.com/questions/6480723/urllib-urlencode-doesnt-like-unicode-values-how-about-this-workaround
 def encode_dict(map):
-    return dict([(key, val.encode('utf-8')) for key, val in map.items()
-                 if isinstance(val, basestring)])
+    return dict([(key, val.encode('utf-8') if isinstance(val, basestring)
+                  else val) for key, val in map.items()])
 
 _app = None
 
